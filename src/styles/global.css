@@ -218,3 +218,23 @@ button.pill:hover { border-color: var(--gold-light); }
   .ep-num { font-size: 28px; }
   .ep h3 { font-size: 22px; }
 }
+
+/* Social icons */
+.social-icons { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; }
+.social-icons a { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; color: var(--text-soft); text-decoration: none; transition: color 0.15s, background 0.15s; }
+.social-icons a:hover { color: var(--gold-light); background: rgba(227, 178, 106, 0.1); }
+.social-lg { justify-content: center; gap: 10px; }
+.social-lg a { width: 52px; height: 52px; border: 1px solid var(--line-3); }
+.social-lg a:hover { border-color: var(--gold-light); }
+
+/* Top bar */
+.topbar { background: var(--bg-3); border-bottom: 1px solid var(--line); font-size: 14px; }
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 2px; padding-bottom: 2px; }
+.topbar-msg { color: var(--text-soft); text-decoration: none; }
+.topbar-msg:hover { color: var(--gold-light); }
+.topbar .social-icons a { width: 36px; height: 36px; }
+@media (max-width: 640px) { .topbar-msg { font-size: 13px; } .topbar .social-icons { gap: 0; } .topbar .social-icons a { width: 32px; height: 32px; } }
+@media (max-width: 400px) { .topbar-msg { display: none; } .topbar .wrap { justify-content: center; } }
+
+.footer-social { display: flex; align-items: center; gap: 8px; color: var(--text-soft); }
+.join-social { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--line-2); width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { site, nav, social, newsletter as mailerlite } from '../data/site';
 import Newsletter from '../components/Newsletter.astro';
+import SocialIcons from '../components/SocialIcons.astro';
 
 interface Props {
   title?: string;
@@ -76,6 +77,12 @@ const baseSchema = [
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
+  <div class="topbar">
+    <div class="wrap">
+      <a href="/podcast" class="topbar-msg">New podcast episodes every other Friday · Listen now</a>
+      <SocialIcons size={18} />
+    </div>
+  </div>
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="/">{site.shortName}</a>
@@ -100,7 +107,7 @@ const baseSchema = [
   <footer class="site-footer">
     <div class="wrap">
       <div>© {new Date().getFullYear()} {site.name}™ · {site.founder}</div>
-      <nav aria-label="Social">{social.map((s) => <a href={s.href} rel="noopener">{s.label}</a>)}</nav>
+      <div class="footer-social"><span>Follow along</span><SocialIcons size={22} /></div>
       <nav aria-label="Legal"><a href="/be-a-guest">Be a Guest</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
     </div>
   </footer>

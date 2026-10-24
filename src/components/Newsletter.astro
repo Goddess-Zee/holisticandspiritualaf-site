@@ -1,5 +1,6 @@
 ---
 import { newsletter } from '../data/site';
+import SocialIcons from './SocialIcons.astro';
 ---
 <section class="join" aria-labelledby="join-title">
   <div class="wrap">
@@ -8,6 +9,10 @@ import { newsletter } from '../data/site';
     <!-- Opens the MailerLite sign-up pop-up (form {newsletter.formId}) -->
     <button class="btn btn-gold ml-onclick-form" type="button" data-ml-form={newsletter.formId}>Sign Up for the Newsletter</button>
     <p class="mute">Unsubscribe anytime. We never sell your data.</p>
+    <div class="join-social">
+      <p class="eyebrow" style="font-size: 12px;">Or follow along</p>
+      <SocialIcons size={26} class="social-lg" />
+    </div>
   </div>
 </section>
 
