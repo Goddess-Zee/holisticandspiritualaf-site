@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { site, books, courses } from '../data/site';
+
+const schema = [
+  ...books.map((b) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Book',
+    name: b.title,
+    author: { '@id': `${site.url}/#zee` },
+    description: b.blurb,
+    url: b.href,
+    offers: { '@type': 'Offer', price: b.price.replace(/[^0-9.]/g, ''), priceCurrency: 'USD', url: b.href },
+  })),
+  ...courses.map((c) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: c.title,
+    description: c.blurb,
+    provider: { '@id': `${site.url}/#org` },
+    offers: { '@type': 'Offer', price: c.price.replace(/[^0-9.]/g, ''), priceCurrency: 'USD', url: c.href, category: 'Paid' },
+  })),
+];
+---
+<Base title="Books & Courses" description="Books, journals, recorded masterclasses and meditation series by Goddess Zee — shadow work, ancestral altars, hoodoo tradition and Divine Feminine healing." schema={schema}>
+  <section class="wrap" style="padding-top: 80px; padding-bottom: 56px;">
+    <div class="stack" style="gap: 18px; max-width: 760px;">
+      <p class="eyebrow">Ancestral writings &amp; soul medicine</p>
+      <h1>Books &amp; <em>Courses</em></h1>
+      <p class="lede">Guides, journals and recorded teachings that activate your memory, speak life into your process and connect you with the power of your lineage.</p>
+    </div>
+  </section>
+
+  <section class="band" id="books" aria-labelledby="books-title">
+    <div class="wrap section">
+      <h2 id="books-title" style="margin-bottom: 40px;">Books</h2>
+      <div class="shelf">
+        {books.map((b) => (
+          <article class="shelf-item">
+            <a href={b.href} rel="noopener" aria-label={`${b.title} on Amazon`}><Img src={b.image} alt={`${b.title} cover`} label={`[${b.title} cover]`} class="cover" /></a>
+            <div class="stack" style="gap: 10px;">
+              <p class="mute">{b.kind}</p>
+              <h3>{b.title}</h3>
+              <p class="soft">{b.blurb}</p>
+              <div class="btns" style="align-items: center; margin-top: 4px;">
+                <span class="price-tag">{b.price}</span>
+                <a class="btn btn-gold" href={b.href} rel="noopener">Buy on Amazon</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="courses" aria-labelledby="courses-title">
+    <h2 id="courses-title" style="margin-bottom: 40px;">Courses &amp; masterclasses</h2>
+    <div class="shelf">
+      {courses.map((c) => (
+        <article class="shelf-item">
+          <a href={c.href} rel="noopener" aria-label={c.title}><Img src={c.image} alt={c.title} label={`[${c.title}]`} class="cover cover-sq" /></a>
+          <div class="stack" style="gap: 10px;">
+            <p class="mute">{c.kind}</p>
+            <h3>{c.title}</h3>
+            <p class="soft">{c.blurb}</p>
+            <div class="btns" style="align-items: center; margin-top: 4px;">
+              <span class="price-tag">{c.price}</span>
+              <a class="btn btn-gold" href={c.href} rel="noopener">Get instant access</a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import { podcast } from '../data/site';
+---
+<Base title="Be a Guest on the Podcast" description="Healers, teachers and truth-tellers: apply to be a guest on the Holistic and Spiritual AF Podcast with Goddess Zee.">
+  <section class="wrap" style="padding-top: 80px; padding-bottom: 88px;">
+    <div class="split" style="gap: 64px; align-items: start;">
+      <div class="stack" style="gap: 22px;">
+        <p class="eyebrow">Be a guest on the podcast</p>
+        <h1>I’ve got something <em>to share</em></h1>
+        <p class="lede">Do you carry medicine for the soul — ancestral wisdom, Divine Feminine codes, holistic practices, or stories of transformation? This podcast is a sacred space to share truth, healing and empowerment so our community can rise into alignment and higher vibrations.</p>
+        <p class="soft">If you’re a healer, teacher or truth-teller with a message that empowers and liberates, I’d love to hear from you.</p>
+        <div class="card" style="gap: 10px;">
+          <p class="eyebrow" style="font-size: 12px;">What guests can expect</p>
+          <ul class="soft" style="margin: 0; padding-left: 1.2em; display: grid; gap: 6px;">
+            <li>A recorded conversation with Goddess Zee</li>
+            <li>An episode shared on Spotify, Apple Podcasts, YouTube and Podbean</li>
+            <li>Your links and offerings in the show notes</li>
+          </ul>
+          <p class="mute" style="margin-top: 6px;">{podcast.schedule} · {podcast.downloads} downloads and growing</p>
+        </div>
+      </div>
+
+      <form class="guest-form card" name="podcast-guest" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="podcast-guest">
+        <p class="visually-hidden"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <h2 style="font-size: 32px;">Tell us about yourself</h2>
+        <div class="field"><label for="g-name">Name</label><input id="g-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="g-email">Email</label><input id="g-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="g-links">Website or social links</label><input id="g-links" name="links" placeholder="Instagram, website, YouTube…"></div>
+        <div class="field"><label for="g-topic">What would you like to talk about?</label><input id="g-topic" name="topic" required></div>
+        <div class="field"><label for="g-about">Your story and the medicine you carry</label><textarea id="g-about" name="about" rows="6" required></textarea></div>
+        <fieldset class="field">
+          <legend>Have you been on the show before?</legend>
+          <div class="choice-row">
+            <label class="choice"><input type="radio" name="returning" value="yes"> Yes, I’m a past guest</label>
+            <label class="choice"><input type="radio" name="returning" value="no" checked> No, first time</label>
+          </div>
+        </fieldset>
+        <button class="btn btn-gold" type="submit">Send my application</button>
+        <p class="mute">We’ll only use your details to follow up about the podcast. <a href="/privacy">Privacy policy</a></p>
+      </form>
+    </div>
+  </section>
+</Base>

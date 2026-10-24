@@ -1,0 +1,9 @@
+# Old GoDaddy URLs -> new pages (301 keeps search rankings)
+/events-%26-classes     /events          301
+/events-&-classes       /events          301
+/video-gallery          /podcast         301
+/privacy-policy-1       /privacy         301
+/cookie-banner-policy   /privacy         301
+/terms-of-use           /terms           301
+/blog                   /writings        301
+/blog/*                 /writings        301

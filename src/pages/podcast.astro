@@ -1,0 +1,156 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { site, podcast } from '../data/site';
+import { getEpisodes, episodeCount, formatDate, formatDuration, shortTitle, isSolo } from '../lib/podcast';
+
+const episodes = await getEpisodes();
+const latest = episodes[0];
+const rest = episodes.slice(1);
+const count = episodeCount(episodes);
+const listen = podcast.listen.filter((l) => l.href && l.href !== '#');
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'PodcastSeries',
+    name: 'Holistic and Spiritual AF Podcast',
+    description: podcast.about,
+    url: `${site.url}/podcast`,
+    webFeed: podcast.feedUrl,
+    author: { '@id': `${site.url}/#zee` },
+    image: podcast.artwork,
+  },
+];
+---
+<Base title="Podcast" description={`${podcast.about} ${count} episodes and counting.`} schema={schema}>
+  <section class="wrap" style="padding-top: 80px; padding-bottom: 56px;">
+    <div class="stack" style="gap: 18px; max-width: 760px;">
+      <p class="eyebrow">The Holistic and Spiritual AF Podcast</p>
+      <h1>Candid conversations for the <em>soul work</em></h1>
+      <p class="lede">{podcast.about}</p>
+      <p class="mute" style="font-size: 15px;">{count} episodes · {podcast.downloads} downloads · {podcast.schedule}</p>
+      {listen.length > 0 && <div class="pills">{listen.map((l) => <a class="pill" href={l.href} rel="noopener">{l.label}</a>)}</div>}
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="latest-title">
+    <div class="wrap section split">
+      <Img src={latest.image ?? podcast.artwork} alt={`Cover art for ${latest.title}`} label="[Episode cover art]" loading="eager"
+        style="border-radius: 16px; aspect-ratio: 1 / 1; width: 100%; object-fit: cover;" />
+      <div class="stack" style="gap: 20px;">
+        <p class="eyebrow">Latest episode · {formatDate(latest.date)}{latest.seconds ? ` · ${formatDuration(latest.seconds)}` : ''}</p>
+        <h2 id="latest-title" style="font-size: clamp(32px, 4vw, 48px);">{latest.number ? `Ep. ${latest.number}: ` : ''}{shortTitle(latest.title)}</h2>
+        {latest.summary && <p class="soft">{latest.summary}</p>}
+        {latest.audio
+          ? <div class="player"><audio controls preload="none" src={latest.audio} aria-label={`Play ${latest.title}`}></audio></div>
+          : <div><a class="btn btn-gold" href={latest.link} rel="noopener">Listen to the episode</a></div>}
+        <a href={latest.link} rel="noopener">Full show notes on Podbean →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="all-title">
+    <div class="row-head" style="margin-bottom: 24px;">
+      <h2 id="all-title">All episodes</h2>
+      <a href="/be-a-guest">Be a guest on the podcast →</a>
+    </div>
+
+    <div class="ep-tools">
+      <label for="ep-search" class="visually-hidden">Search episodes</label>
+      <input id="ep-search" class="ep-search" type="search" placeholder="Search by topic or guest — ancestors, hoodoo, womb…" autocomplete="off">
+      <div class="pills" role="group" aria-label="Filter episodes">
+        <button type="button" class="pill filter is-on" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="pill filter" data-filter="guest" aria-pressed="false">Guest conversations</button>
+        <button type="button" class="pill filter" data-filter="solo" aria-pressed="false">Solo with Goddess Zee</button>
+      </div>
+    </div>
+    <p class="mute" id="ep-status" aria-live="polite" style="margin: 16px 0 0;">Showing {rest.length} earlier episodes</p>
+
+    <ul class="ep-list" id="ep-list" style="margin-top: 16px;">
+      {rest.map((e) => (
+        <li class="ep" data-kind={isSolo(e.title) ? 'solo' : 'guest'} data-text={`${e.title} ${e.summary}`.toLowerCase()}>
+          <div class="ep-num" aria-hidden="true">{e.number ?? '★'}</div>
+          <div class="stack" style="gap: 6px;">
+            <p class="mute">{e.number ? `Ep. ${e.number} · ` : ''}{formatDate(e.date)}{e.seconds ? ` · ${formatDuration(e.seconds)}` : ''}</p>
+            <h3>{shortTitle(e.title)}</h3>
+            {e.summary && <p class="soft ep-sum">{e.summary}</p>}
+            <div class="btns" style="gap: 18px; margin-top: 6px;">
+              {e.audio && <button type="button" class="link-btn play" data-src={e.audio} data-title={e.title}>▶ Play here</button>}
+              <a href={e.link} rel="noopener">Listen on Podbean →</a>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <p class="soft" id="ep-empty" hidden style="padding: 32px 0;">No episodes match that search yet. Try another word — or <a href="/be-a-guest">suggest the topic</a>.</p>
+  </section>
+
+  <section class="band">
+    <div class="wrap section split" style="align-items: center;">
+      <div class="stack" style="gap: 16px;">
+        <p class="eyebrow">Be a guest</p>
+        <h2>Do you carry medicine for the soul?</h2>
+        <p class="soft">Healers, teachers and truth-tellers with a message that empowers and liberates — I’d love to hear from you.</p>
+      </div>
+      <div><a class="btn btn-gold" href="/be-a-guest">Apply to be a guest</a></div>
+    </div>
+  </section>
+
+  <div class="mini-player" id="mini-player" hidden>
+    <div class="wrap mini-inner">
+      <p class="mini-title" id="mini-title"></p>
+      <audio id="mini-audio" controls preload="none"></audio>
+      <button type="button" class="link-btn" id="mini-close" aria-label="Close player">Close</button>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const list = document.getElementById('ep-list')!;
+  const items = Array.from(list.querySelectorAll<HTMLLIElement>('li.ep'));
+  const search = document.getElementById('ep-search') as HTMLInputElement;
+  const status = document.getElementById('ep-status')!;
+  const empty = document.getElementById('ep-empty')!;
+  const filters = Array.from(document.querySelectorAll<HTMLButtonElement>('button.filter'));
+  let kind = 'all';
+
+  const apply = () => {
+    const q = search.value.trim().toLowerCase();
+    let shown = 0;
+    for (const li of items) {
+      const ok = (kind === 'all' || li.dataset.kind === kind) && (!q || (li.dataset.text ?? '').includes(q));
+      li.hidden = !ok;
+      if (ok) shown++;
+    }
+    status.textContent = q || kind !== 'all' ? `${shown} episode${shown === 1 ? '' : 's'} found` : `Showing ${shown} earlier episodes`;
+    empty.hidden = shown > 0;
+  };
+  search.addEventListener('input', apply);
+  for (const b of filters) {
+    b.addEventListener('click', () => {
+      kind = b.dataset.filter ?? 'all';
+      for (const o of filters) {
+        o.classList.toggle('is-on', o === b);
+        o.setAttribute('aria-pressed', String(o === b));
+      }
+      apply();
+    });
+  }
+
+  const mini = document.getElementById('mini-player')!;
+  const audio = document.getElementById('mini-audio') as HTMLAudioElement;
+  const title = document.getElementById('mini-title')!;
+  list.addEventListener('click', (ev) => {
+    const btn = (ev.target as HTMLElement).closest<HTMLButtonElement>('button.play');
+    if (!btn) return;
+    audio.src = btn.dataset.src ?? '';
+    title.textContent = btn.dataset.title ?? '';
+    mini.hidden = false;
+    audio.play().catch(() => {});
+  });
+  document.getElementById('mini-close')!.addEventListener('click', () => {
+    audio.pause();
+    mini.hidden = true;
+  });
+</script>

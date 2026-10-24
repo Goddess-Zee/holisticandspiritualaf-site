@@ -1,0 +1,15 @@
+---
+import { newsletter } from '../data/site';
+---
+<section class="join" aria-labelledby="join-title">
+  <div class="wrap">
+    <h2 id="join-title">Join the Circle</h2>
+    <p class="soft">{newsletter.note}</p>
+    <!-- TODO: set newsletter.action to the MailerLite embedded form URL -->
+    <form action={newsletter.action || undefined} method="post">
+      <label for="nl-email" class="visually-hidden">Email address</label>
+      <input id="nl-email" type="email" name="fields[email]" placeholder="Your email" autocomplete="email" required>
+      <button class="btn btn-gold" type="submit">Sign Up</button>
+    </form>
+  </div>
+</section>

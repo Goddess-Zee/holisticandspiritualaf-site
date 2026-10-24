@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import { meditations, insightTimer, courses } from '../data/site';
+
+const series = courses.find((c) => /rest, release/i.test(c.title));
+---
+<Base title="Guided Meditations" description="Guided meditations by Goddess Zee to shift your frequency, activate your Divine Feminine codes and realign your energy — on YouTube and Insight Timer.">
+  <section class="wrap" style="padding-top: 80px; padding-bottom: 56px;">
+    <div class="stack" style="gap: 18px; max-width: 780px;">
+      <p class="eyebrow">Guided meditations by Goddess Zee</p>
+      <h1>Upgrade your frequency and <em>activate your codes</em></h1>
+      <p class="lede">Each experience is a vibrational journey where sound, breath and intention meet to harmonize your energy and elevate your spirit. Join live on YouTube for longer activations, or tune in to shorter meditations on Insight Timer whenever you need to return to center.</p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="yt-title">
+    <div class="wrap section">
+      <h2 id="yt-title" style="margin-bottom: 40px;">Activations on YouTube</h2>
+      <div class="cards" style="gap: 32px;">
+        {meditations.map((m) => (
+          <article class="stack" style="gap: 14px;">
+            <a class="yt" href={`https://www.youtube.com/watch?v=${m.youtubeId}`} rel="noopener" aria-label={`Watch ${m.title} on YouTube`}>
+              <img src={`https://i.ytimg.com/vi/${m.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" />
+              <span class="yt-play" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"></path></svg></span>
+            </a>
+            <h3 style="font-size: 26px;">{m.title}</h3>
+            <p class="soft">{m.blurb}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section split" aria-labelledby="it-title">
+    <div class="stack" style="gap: 16px;">
+      <p class="eyebrow">Quick reconnect</p>
+      <h2 id="it-title">Shorter meditations on Insight Timer</h2>
+      <p class="soft">Gentle returns to presence through mindful breathwork, grounding visualization and soothing affirmations — for calm, clarity and energetic balance between the moments of your day.</p>
+      <div><a class="btn btn-line" href={insightTimer} rel="noopener">Listen on Insight Timer</a></div>
+    </div>
+    {series && (
+      <div class="card featured">
+        <p class="eyebrow">Meditation series</p>
+        <h3>{series.title}</h3>
+        <p class="grow">{series.blurb}</p>
+        <div class="price">{series.price}</div>
+        <a class="btn btn-gold" href={series.href} rel="noopener">Start the series</a>
+      </div>
+    )}
+  </section>
+</Base>

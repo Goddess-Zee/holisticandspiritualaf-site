@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { site, sessions } from '../data/site';
+
+const paid = sessions.filter((s) => s.price.startsWith('$'));
+const mentorshipMail = `mailto:${site.email}?subject=${encodeURIComponent("I'm interested in The Sovereign Matriarch mentorship")}&body=${encodeURIComponent("Hi Goddess Zee, my name is ______ and I'd like to know more about the private mentorship program.")}`;
+
+const schema = paid.map((s) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: s.title,
+  description: s.blurb,
+  provider: { '@id': `${site.url}/#zee` },
+  areaServed: 'Online',
+  offers: { '@type': 'Offer', price: s.price.replace(/[^0-9.]/g, ''), priceCurrency: 'USD', url: `${site.url}/consultations` },
+}));
+---
+<Base title="Spiritual Consultations" description="One-on-one spiritual consultations and ancestral healing with Goddess Zee — reiki master, intuitive energy healer and medium with over 20 years of practice." schema={schema}>
+  <section class="wrap" style="padding-top: 80px; padding-bottom: 72px;">
+    <div class="split" style="gap: 64px;">
+      <div class="stack" style="gap: 22px;">
+        <p class="eyebrow">Work with Goddess Zee</p>
+        <h1>Gain clarity and insight, <em>one-on-one</em></h1>
+        <p class="lede">Culturally rooted and energetically aligned sessions where we hold space for your growth, your grief, your gifts and your glow-up. Every journey is unique — together we find the approach that fits you.</p>
+        <div class="btns">
+          <a class="btn btn-gold" href="#sessions">Choose a session</a>
+          <a class="btn btn-line" href="#sovereign-matriarch">Private mentorship</a>
+        </div>
+      </div>
+      <Img src="/images/consultations/candles-hero.png" alt="Lit candles surrounded by foliage in a warm, dark setting" label="[Candlelit altar]" loading="eager"
+        style="border-radius: 16px; height: 460px; width: 100%; object-fit: cover;" />
+    </div>
+  </section>
+
+  <section class="band" id="sessions" aria-labelledby="sessions-title">
+    <div class="wrap section">
+      <h2 id="sessions-title" style="margin-bottom: 40px;">Spiritual consultations</h2>
+      <div class="cards">
+        {paid.map((s) => (
+          <article class={`card${s.featured ? ' featured' : ''}`}>
+            <h3>{s.title}</h3>
+            <p class="grow">{s.blurb}</p>
+            <div class="price">{s.price}</div>
+            <a class={`btn ${s.featured ? 'btn-gold' : 'btn-line'}`} href={s.href}>{s.cta}</a>
+          </article>
+        ))}
+      </div>
+      <p class="mute" style="margin-top: 24px; font-size: 15px;">Sessions are held online. You’ll choose a time and pay securely when you book.</p>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="expect-title">
+    <h2 id="expect-title" style="margin-bottom: 40px;">What to expect</h2>
+    <ol class="steps">
+      <li><span class="step-n">1</span><div><h3>Book your time</h3><p class="soft">Pick the session that fits and a time that works for you.</p></div></li>
+      <li><span class="step-n">2</span><div><h3>Arrive as you are</h3><p class="soft">We explore your energy, patterns and purpose, and receive the messages your ancestors have for you.</p></div></li>
+      <li><span class="step-n">3</span><div><h3>Leave with tools</h3><p class="soft">You’ll walk away with clarity, guidance and personalized practices for your healing.</p></div></li>
+    </ol>
+  </section>
+
+  <section class="band" id="sovereign-matriarch" aria-labelledby="sm-title">
+    <div class="wrap section split" style="gap: 64px;">
+      <Img src="/images/consultations/sovereign-matriarch-oct-2025.png" alt="The Sovereign Matriarch mentorship" label="[The Sovereign Matriarch]"
+        style="border-radius: 240px 240px 16px 16px; height: 520px; width: 100%; object-fit: cover;" />
+      <div class="stack" style="gap: 20px;">
+        <p class="eyebrow">Private mentorship program · 12 weeks</p>
+        <h2 id="sm-title">The Sovereign Matriarch</h2>
+        <p class="soft" style="font-size: 18px;"><em>Ancestral Healing &amp; Divine Feminine Embodiment.</em> A private, 12-week container for the woman who is ready to stop seeking outside of herself and begin her sacred descent into the heart of her own power.</p>
+        <p class="soft">It is a guided journey to heal the wounds of the maternal line, transform, and finally ascend to the throne of your own life.</p>
+        <div><a class="btn btn-gold" href={mentorshipMail}>Ask about the mentorship</a></div>
+        <p class="mute">Opens an email to {site.email}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" style="text-align: center;">
+    <blockquote style="margin: 0 auto; font-family: var(--serif); font-style: italic; font-size: clamp(26px, 3vw, 34px); line-height: 1.35; color: var(--text-strong); max-width: 820px;">“This is for the women doing the soul work not just for themselves, but for their bloodline.”</blockquote>
+  </section>
+</Base>

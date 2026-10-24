@@ -1,0 +1,13 @@
+---
+import Base from './Base.astro';
+const { frontmatter } = Astro.props;
+---
+<Base title={frontmatter.title} description={frontmatter.description} newsletter={false}>
+  <section class="wrap" style="padding-top: 72px; padding-bottom: 96px;">
+    <div class="article legal">
+      <h1 style="font-size: clamp(40px, 5vw, 56px);">{frontmatter.title}</h1>
+      <p class="mute">Effective {frontmatter.effective} · Last updated {frontmatter.updated}</p>
+      <slot />
+    </div>
+  </section>
+</Base>

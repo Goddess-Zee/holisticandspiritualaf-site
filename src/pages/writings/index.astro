@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getWritings, readingTime, formatLongDate, excerpt } from '../../lib/writings';
+
+const writings = await getWritings();
+const themes = [...new Set(writings.map((w) => w.data.theme))];
+---
+<Base title="Ancestral Writings" description="Essays by Goddess Zee on ancestral lineage, shadow work, healing and the sovereign Divine Feminine.">
+  <section class="wrap" style="padding-top: 80px; padding-bottom: 56px;">
+    <div class="stack" style="gap: 18px; max-width: 760px;">
+      <p class="eyebrow">Ancestral writings &amp; soul medicine</p>
+      <h1>Writings</h1>
+      <p class="lede">Welcome to my healing journey. Ancestors, healing and holistic living are my way of life — these essays offer insight into my world, and medicine for yours.</p>
+      {themes.length > 1 && <div class="pills">{themes.map((t) => <a class="pill" href={`#${t.toLowerCase().replace(/[^a-z]+/g, '-')}`}>{t}</a>)}</div>}
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap section">
+      {writings.length === 0 && <p class="soft">New writings are on the way.</p>}
+      <div class="post-grid">
+        {writings.map((w) => (
+          <article class="post-card" id={w.data.theme.toLowerCase().replace(/[^a-z]+/g, '-')}>
+            <a href={`/writings/${w.id}`} class="post-link">
+              {w.data.image
+                ? <img src={w.data.image} alt="" loading="lazy" decoding="async" class="post-img" />
+                : <div class="post-img post-img-empty" aria-hidden="true"></div>}
+              <span class="eyebrow" style="font-size: 12px;">{w.data.theme}</span>
+              <h2 class="post-title">{w.data.title}</h2>
+              <span class="soft post-ex">{w.data.subtitle ?? excerpt(w.body)}</span>
+              <span class="mute">{formatLongDate(w.data.date)} · {readingTime(w.body)}</span>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

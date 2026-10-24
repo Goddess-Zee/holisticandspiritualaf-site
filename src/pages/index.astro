@@ -1,0 +1,160 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { site, podcast, sessions, books, courses, events, libraryTags, press } from '../data/site';
+import { getWritings } from '../lib/writings';
+
+const published = await getWritings();
+const featuredWritings = [...published.filter((w) => w.data.featured), ...published.filter((w) => !w.data.featured)]
+  .slice(0, 3)
+  .map((w) => ({ title: w.data.title, theme: w.data.theme, href: `/writings/${w.id}`, image: w.data.image }));
+import { getEpisodes, episodeCount, formatDate, shortTitle } from '../lib/podcast';
+
+const episodes = await getEpisodes();
+const latest = episodes[0];
+const count = episodeCount(episodes);
+const listen = podcast.listen.filter((l) => l.href && l.href !== '#');
+const nextEvent = events[0];
+const shop = [...books, ...courses];
+
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: site.url },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'PodcastSeries',
+    name: 'Holistic and Spiritual AF Podcast',
+    url: `${site.url}/podcast`,
+    webFeed: podcast.feedUrl,
+    author: { '@id': `${site.url}/#zee` },
+  },
+];
+---
+<Base schema={schema}>
+  <section class="wrap" style="padding-top: 96px; padding-bottom: 80px;">
+    <div class="split" style="gap: 64px;">
+      <div class="stack" style="gap: 28px;">
+        <p class="eyebrow">For Afro-Indigenous, Afro-Caribbean &amp; Afro-Latina women</p>
+        <h1>Healing and Wisdom <em>From the Ancestors</em></h1>
+        <p class="lede">We are not just healing, we are remembering. Podcast, classes, writings, meditations and sacred support to reclaim your Divine Feminine power and walk in ancestral alignment.</p>
+        <div class="btns">
+          <a class="btn btn-gold" href="/podcast">Listen to the Podcast</a>
+          <a class="btn btn-line" href="/consultations">Book a Consultation</a>
+        </div>
+        <dl style="display: flex; flex-wrap: wrap; gap: 40px; margin: 12px 0 0;">
+          <div><dt class="visually-hidden">Episodes</dt><dd style="margin:0; font-family: var(--serif); font-size: 40px; color: var(--text-strong); line-height: 1;">{count}</dd><span class="mute">episodes</span></div>
+          <div><dt class="visually-hidden">Downloads</dt><dd style="margin:0; font-family: var(--serif); font-size: 40px; color: var(--text-strong); line-height: 1;">{podcast.downloads}</dd><span class="mute">downloads</span></div>
+          <div><dt class="visually-hidden">Practice</dt><dd style="margin:0; font-family: var(--serif); font-size: 40px; color: var(--text-strong); line-height: 1;">20+ yrs</dd><span class="mute">of practice</span></div>
+        </dl>
+      </div>
+      <Img src="/images/home/home-06-zipporah-banyay.jpeg" alt="Goddess Zee" label="[Portrait of Goddess Zee]" loading="eager"
+        style="border-radius: 240px 240px 16px 16px; height: 560px; width: 100%; object-fit: cover;" />
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="pod-title">
+    <div class="wrap section split">
+      <Img src={latest.image ?? podcast.artwork} alt={`Cover art for ${latest.title}`} label="[Episode cover art]"
+        style="border-radius: 16px; aspect-ratio: 1 / 1; width: 100%; object-fit: cover;" />
+      <div class="stack" style="gap: 22px;">
+        <p class="eyebrow">New episode · {formatDate(latest.date)}</p>
+        <h2 id="pod-title" style="font-size: clamp(32px, 4vw, 48px);">{latest.number ? `Ep. ${latest.number}: ` : ''}{shortTitle(latest.title)}</h2>
+        {latest.summary && <p class="soft">{latest.summary}</p>}
+        {latest.audio && (
+          <div class="player"><audio controls preload="none" src={latest.audio} aria-label={`Play ${latest.title}`}></audio></div>
+        )}
+        <div class="pills">{listen.map((l) => <a class="pill" href={l.href} rel="noopener">{l.label}</a>)}</div>
+        <div class="btns" style="gap: 24px;">
+          <a href="/podcast">All {count} episodes →</a>
+          <a href="/be-a-guest">Be a guest on the podcast →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {nextEvent && (
+    <section class="wrap section" aria-labelledby="class-title">
+      <div class="card" style="padding: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 40px; align-items: center;">
+        <div class="stack" style="gap: 14px;">
+          <p class="eyebrow">Next live class</p>
+          <h2 id="class-title" style="font-size: clamp(32px, 4vw, 44px);">{nextEvent.title}</h2>
+          <p class="soft">{nextEvent.blurb}</p>
+        </div>
+        <div class="stack" style="gap: 16px; align-items: flex-start;">
+          <p style="font-size: 18px;"><strong>{nextEvent.date}</strong><br>{nextEvent.time} · Online</p>
+          <a class="btn btn-gold" href={nextEvent.href} rel="noopener">Get Your Ticket</a>
+          <a href="/events">See all classes &amp; events →</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="wrap" style="padding-bottom: 88px;" aria-labelledby="work-title">
+    <div class="stack" style="gap: 12px; max-width: 680px; margin-bottom: 40px;">
+      <p class="eyebrow">Work with Goddess Zee</p>
+      <h2 id="work-title">Sacred support for your growth, your grief, your gifts and your glow-up</h2>
+    </div>
+    <div class="cards">
+      {sessions.map((s) => (
+        <div class={`card${s.featured ? ' featured' : ''}`}>
+          <h3>{s.short}</h3>
+          <p class="grow">{s.teaser}</p>
+          <div class="price">{s.price}</div>
+          <a class={`btn ${s.featured ? 'btn-gold' : 'btn-line'}`} href={s.href}>{s.cta}</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="shop-title">
+    <div class="wrap section">
+      <div class="row-head"><h2 id="shop-title">Books &amp; Courses</h2><a href="/books-and-courses">Visit the shop →</a></div>
+      <div class="products">
+        {shop.map((p) => (
+          <a class="product" href={p.href} rel="noopener">
+            <Img src={p.image} alt={`${p.title} cover`} label={`[${p.title}]`} class="cover" />
+            <span class="t">{p.title}</span>
+            <span class="mute">{p.kind} · {p.price}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section split" aria-labelledby="lib-title">
+    <div class="stack" style="gap: 18px;">
+      <p class="eyebrow">Afro-Indigenous Research Library</p>
+      <h2 id="lib-title">Not a sidebar to history. A center.</h2>
+      <p class="soft">A living library of books, articles, oral histories, art and inventions that places Afro-Indigenous peoples of the Americas at the forefront, where their stories have always belonged.</p>
+      <div><a class="btn btn-line" href="https://afroindenginousresearchlibrary.netlify.app/" rel="noopener">Explore the Library</a></div>
+    </div>
+    <div class="pills">{libraryTags.map((t) => <span class="pill" style="color: var(--text-soft);">{t}</span>)}</div>
+  </section>
+
+  <section class="band" aria-labelledby="write-title">
+    <div class="wrap section">
+      <div class="row-head"><h2 id="write-title">Ancestral Writings</h2><a href="/writings">Read all writings →</a></div>
+      <div class="post-grid">
+        {featuredWritings.map((w) => (
+          <article class="post-card">
+            <a href={w.href} class="post-link">
+              {w.image
+                ? <img src={w.image} alt="" loading="lazy" decoding="async" class="post-img" />
+                : <div class="post-img post-img-empty" aria-hidden="true"></div>}
+              <span class="eyebrow" style="font-size: 12px;">{w.theme}</span>
+              <h3 class="post-title">{w.title}</h3>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-top: 96px; padding-bottom: 80px; text-align: center;">
+    <blockquote style="margin: 0 auto; font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.3; color: var(--text-strong); max-width: 860px;">“Every act of healing shifts the vibration of your DNA, allowing the wisdom of your ancestors to flow through in its highest form.”</blockquote>
+    <p class="mute" style="margin-top: 20px;">— Goddess Zee</p>
+    <div style="margin-top: 56px;">
+      <p class="eyebrow" style="margin-bottom: 16px;">As featured in</p>
+      <div class="pills" style="justify-content: center;">{press.map((p) => <a class="pill" href={p.href} rel="noopener">{p.outlet}</a>)}</div>
+    </div>
+  </section>
+</Base>

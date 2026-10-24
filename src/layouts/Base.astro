@@ -1,0 +1,112 @@
+---
+import '../styles/global.css';
+import { site, nav, social } from '../data/site';
+import Newsletter from '../components/Newsletter.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  schema?: Record<string, unknown>[];
+  newsletter?: boolean;
+}
+const { title, description = site.description, image = site.ogImage, schema = [], newsletter = true } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : `${site.name}: ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL(image, site.url).href;
+const path = Astro.url.pathname.replace(/\.html$/, '');
+
+const baseSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${site.url}/#org`,
+    name: site.name,
+    url: site.url,
+    logo: `${site.url}/favicon.svg`,
+    founder: { '@id': `${site.url}/#zee` },
+    sameAs: social.map((s) => s.href),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${site.url}/#zee`,
+    name: site.founder,
+    alternateName: site.founderAlias,
+    jobTitle: 'Energy healer, author and podcast host',
+    url: site.url,
+    sameAs: social.map((s) => s.href),
+  },
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{pageTitle}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  <meta name="theme-color" content="#120F0C">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="sitemap" href="/sitemap-index.xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content={site.name}>
+  <meta property="og:title" content={pageTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:image" content={ogImage}>
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="google-site-verification" content={site.verification.google}>
+  <meta name="facebook-domain-verification" content={site.verification.facebook}>
+  <meta name="p:domain_verify" content={site.verification.pinterest}>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  {[...baseSchema, ...schema].map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">{site.shortName}</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+      <nav id="main-nav" class="main-nav" aria-label="Main">
+        <ul>
+          {nav.map((n) => (
+            <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined} {...(n.external ? { rel: 'noopener' } : {})}>{n.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <a class="btn btn-gold header-cta" href="/consultations">Book a Session</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <slot />
+  </main>
+
+  {newsletter && <Newsletter />}
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>© {new Date().getFullYear()} {site.name}™ · {site.founder}</div>
+      <nav aria-label="Social">{social.map((s) => <a href={s.href} rel="noopener">{s.label}</a>)}</nav>
+      <nav aria-label="Legal"><a href="/be-a-guest">Be a Guest</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+    </div>
+  </footer>
+
+  <script>
+    const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+    const menu = document.getElementById('main-nav');
+    btn?.addEventListener('click', () => {
+      const open = menu?.classList.toggle('open') ?? false;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  </script>
+</body>
+</html>

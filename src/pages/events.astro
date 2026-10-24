@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { site, events } from '../data/site';
+
+const now = Date.now();
+const upcoming = events.filter((e) => new Date(e.endISO).getTime() >= now);
+const past = events.filter((e) => new Date(e.endISO).getTime() < now);
+
+const schema = upcoming.map((e) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: e.title,
+  description: e.blurb,
+  startDate: e.startISO,
+  endDate: e.endISO,
+  eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  location: { '@type': 'VirtualLocation', url: e.href },
+  organizer: { '@id': `${site.url}/#zee` },
+  offers: { '@type': 'Offer', url: e.href, availability: 'https://schema.org/InStock' },
+}));
+---
+<Base title="Classes & Events" description="Live healing and spiritual development classes with Goddess Zee — shadow work, intuitive practice, divination and holistic healing." schema={schema}>
+  <section class="wrap" style="padding-top: 80px; padding-bottom: 56px;">
+    <div class="stack" style="gap: 18px; max-width: 760px;">
+      <p class="eyebrow">Classes &amp; Events</p>
+      <h1>Gather, learn and <em>remember</em></h1>
+      <p class="lede">Grounded, transformative teachings that integrate shadow work, intuitive practices and holistic healing to awaken your inner goddess and strengthen your spiritual toolkit.</p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="up-title">
+    <div class="wrap section">
+      <h2 id="up-title" style="margin-bottom: 40px;">Upcoming</h2>
+      {upcoming.length === 0 && (
+        <p class="soft">New classes are being planned. Join the newsletter below to hear first.</p>
+      )}
+      <div class="stack" style="gap: 32px;">
+        {upcoming.map((e) => (
+          <article class="card" style="padding: 0; overflow: hidden; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 0;">
+            <Img src={e.image} alt={`${e.title} banner`} label={`[${e.title}]`} style="width: 100%; height: 100%; min-height: 280px; object-fit: cover;" />
+            <div class="stack" style="gap: 16px; padding: 40px;">
+              <p class="eyebrow">{e.kind}</p>
+              <h3 style="font-size: clamp(30px, 3.4vw, 40px); font-weight: 500;">{e.title}</h3>
+              <p style="font-size: 18px;"><strong>{e.date}</strong><br>{e.time}</p>
+              <p class="soft">{e.blurb}</p>
+              <div class="btns" style="align-items: center;">
+                <a class="btn btn-gold" href={e.href} rel="noopener">Get Your Ticket</a>
+                <span class="mute">Tickets via Eventbrite</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {past.length > 0 && (
+    <section class="wrap section" aria-labelledby="past-title">
+      <h2 id="past-title" style="margin-bottom: 32px;">Past classes</h2>
+      <ul class="ep-list">
+        {past.map((e) => <li class="ep" style="grid-template-columns: 1fr;"><div><p class="mute">{e.date}</p><h3>{e.title}</h3></div></li>)}
+      </ul>
+    </section>
+  )}
+
+  <section class="wrap section split" aria-labelledby="rec-title">
+    <div class="stack" style="gap: 16px;">
+      <p class="eyebrow">Learn anytime</p>
+      <h2 id="rec-title">Missed a live class?</h2>
+      <p class="soft">Recorded masterclasses and meditation series are available to start today.</p>
+    </div>
+    <div><a class="btn btn-line" href="/books-and-courses#courses">Browse recorded courses</a></div>
+  </section>
+</Base>

@@ -1,0 +1,86 @@
+---
+import Base from '../../layouts/Base.astro';
+import { render } from 'astro:content';
+import { site } from '../../data/site';
+import { getWritings, readingTime, formatLongDate, excerpt, type Writing } from '../../lib/writings';
+
+export async function getStaticPaths() {
+  const all = await getWritings();
+  return all.map((entry) => ({ params: { slug: entry.id }, props: { entry, all } }));
+}
+
+interface Props { entry: Writing; all: Writing[] }
+const { entry, all } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const description = d.subtitle ?? excerpt(entry.body, 155);
+const more = all.filter((w) => w.id !== entry.id).sort((a, b) => Number(b.data.theme === d.theme) - Number(a.data.theme === d.theme)).slice(0, 3);
+
+const offer =
+  d.theme === 'Shadow Work & Healing'
+    ? { text: 'Go deeper with The 5 Stages of Shadow Work.', label: 'Get the book', href: '/books-and-courses#books' }
+    : d.theme === 'Ancestral Lineage'
+      ? { text: 'Ready to hear what your ancestors have for you?', label: 'Book a consultation', href: '/consultations' }
+      : d.theme === 'The Sovereign Feminine'
+        ? { text: 'Heal the maternal line in The Sovereign Matriarch, a private 12-week mentorship.', label: 'Learn about the mentorship', href: '/consultations#sovereign-matriarch' }
+        : { text: 'Strengthen your spiritual toolkit in a live class.', label: 'See classes & events', href: '/events' };
+
+const schema = [{
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: d.title,
+  description,
+  datePublished: d.date.toISOString(),
+  author: { '@id': `${site.url}/#zee` },
+  publisher: { '@id': `${site.url}/#org` },
+  mainEntityOfPage: `${site.url}/writings/${entry.id}`,
+  ...(d.image ? { image: d.image } : {}),
+}];
+---
+<Base title={d.title} description={description} image={d.image} schema={schema}>
+  <article>
+    <header class="wrap" style="padding-top: 72px; padding-bottom: 40px;">
+      <div class="stack" style="gap: 18px; max-width: 820px; margin: 0 auto; text-align: center; align-items: center;">
+        <a href="/writings" class="mute" style="color: var(--text-mute);">← All writings</a>
+        <p class="eyebrow">{d.theme}</p>
+        <h1 style="font-size: clamp(40px, 6vw, 64px);">{d.title}</h1>
+        {d.subtitle && <p class="lede" style="margin: 0 auto;">{d.subtitle}</p>}
+        <p class="mute">By {site.founderAlias} · {formatLongDate(d.date)} · {readingTime(entry.body)}</p>
+      </div>
+    </header>
+    {d.image && (
+      <div class="wrap" style="max-width: 900px; padding-bottom: 48px;">
+        <img src={d.image} alt="" style="width: 100%; max-height: 640px; object-fit: cover; border-radius: 16px;" loading="eager" />
+      </div>
+    )}
+    <div class="wrap">
+      <div class="prose article"><Content /></div>
+    </div>
+  </article>
+
+  <aside class="wrap section" aria-label="Keep going">
+    <div class="card featured" style="max-width: 820px; margin: 0 auto; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;">
+      <p style="font-family: var(--serif); font-size: 26px; color: var(--text-strong); flex: 1 1 360px; line-height: 1.25;">{offer.text}</p>
+      <a class="btn btn-gold" href={offer.href}>{offer.label}</a>
+    </div>
+  </aside>
+
+  {more.length > 0 && (
+    <section class="band" aria-labelledby="more-title">
+      <div class="wrap section">
+        <h2 id="more-title" style="margin-bottom: 32px; font-size: 40px;">Keep reading</h2>
+        <div class="post-grid">
+          {more.map((w) => (
+            <article class="post-card">
+              <a href={`/writings/${w.id}`} class="post-link">
+                <span class="eyebrow" style="font-size: 12px;">{w.data.theme}</span>
+                <h3 class="post-title">{w.data.title}</h3>
+                <span class="mute">{readingTime(w.body)}</span>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>
