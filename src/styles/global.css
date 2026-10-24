@@ -166,7 +166,8 @@ button.pill:hover { border-color: var(--gold-light); }
 .shelf-item h3 { font-size: 28px; line-height: 1.15; }
 .price-tag { font-family: var(--serif); font-size: 28px; color: var(--gold-light); margin-right: 6px; }
 @media (max-width: 520px) {
-  .shelf-item { grid-template-columns: 1fr; }
+  .shelf-item, .shelf-item:has(.cover-sq) { grid-template-columns: 1fr; }
+  .shelf-item .cover-sq { width: 100%; max-width: 360px; }
   .shelf-item .cover { width: 180px; }
 }
 
