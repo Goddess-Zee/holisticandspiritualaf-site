@@ -52,17 +52,17 @@ export const podcast = {
   ],
 };
 
-// TODO: replace with Cal.com booking links once created
+// Booking + payment via Cal.com (connected to Stripe)
 export const sessions = [
   {
     title: '30 Min Spiritual Consultation',
     short: '30 Min Consultation',
     teaser: 'A focused clarity session on one specific concern, with ancestral guidance and simple next steps.',
-    price: '[YOUR PRICE]',
+    price: '$55.55',
     blurb:
       'A focused clarity session to help you quickly realign. We tap into your energy and ancestral guidance to address a specific concern, highlight blocks, and offer simple steps so you can move forward with confidence and peace.',
     cta: 'Book 30 Minutes',
-    href: '#book-30',
+    href: 'https://cal.com/zipporah-banyay-enw72v/30min',
     featured: false,
   },
   {
@@ -73,7 +73,7 @@ export const sessions = [
     blurb:
       'A deep, transformative soul session for women ready for aligned change. We explore your energy, patterns, and purpose while receiving ancestral messages. You’ll leave with clarity, guidance, and personalized tools for healing.',
     cta: 'Book 60 Minutes',
-    href: '#book-60',
+    href: 'https://cal.com/zipporah-banyay-enw72v/60min',
     featured: true,
   },
   {
@@ -198,5 +198,9 @@ export const libraryTags = [
   'Seminole', 'All-Black Towns', 'Black Inventors', 'Timeline', 'Map',
 ];
 
-// MailerLite form action — TODO: paste from MailerLite > Forms > Embedded form
-export const newsletter = { action: '', note: 'Monthly energy updates, early access to classes, and new episodes in your inbox.' };
+// MailerLite: universal script account + the pop-up form that collects signups
+export const newsletter = {
+  account: '1250967',
+  formId: 'bf10ui',
+  note: 'Monthly energy updates, early access to classes, and new episodes in your inbox.',
+};
