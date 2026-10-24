@@ -8,10 +8,11 @@ const published = await getWritings();
 const featuredWritings = [...published.filter((w) => w.data.featured), ...published.filter((w) => !w.data.featured)]
   .slice(0, 3)
   .map((w) => ({ title: w.data.title, theme: w.data.theme, href: `/writings/${w.id}`, image: coverFor(w) }));
-import { getEpisodes, episodeCount, formatDate, shortTitle } from '../lib/podcast';
+import { getEpisodes, getShowArtwork, episodeCount, formatDate, shortTitle } from '../lib/podcast';
 
 const episodes = await getEpisodes();
 const latest = episodes[0];
+const artwork = await getShowArtwork();
 const count = episodeCount(episodes);
 const listen = podcast.listen.filter((l) => l.href && l.href !== '#');
 const nextEvent = events[0];
@@ -53,7 +54,7 @@ const schema = [
 
   <section class="band" aria-labelledby="pod-title">
     <div class="wrap section split">
-      <Img src={latest.image ?? podcast.artwork} alt={`Cover art for ${latest.title}`} label="[Episode cover art]"
+      <Img src={latest.image ?? artwork} alt={`Cover art for ${latest.title}`} label="[Episode cover art]"
         style="border-radius: 16px; aspect-ratio: 1 / 1; width: 100%; object-fit: cover;" />
       <div class="stack" style="gap: 22px;">
         <p class="eyebrow">New episode · {formatDate(latest.date)}</p>

@@ -2,10 +2,11 @@
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import { site, podcast } from '../data/site';
-import { getEpisodes, episodeCount, formatDate, formatDuration, shortTitle, isSolo } from '../lib/podcast';
+import { getEpisodes, getShowArtwork, episodeCount, formatDate, formatDuration, shortTitle, isSolo } from '../lib/podcast';
 
 const episodes = await getEpisodes();
 const latest = episodes[0];
+const artwork = await getShowArtwork();
 const rest = episodes.slice(1);
 const count = episodeCount(episodes);
 const listen = podcast.listen.filter((l) => l.href && l.href !== '#');
@@ -19,7 +20,7 @@ const schema = [
     url: `${site.url}/podcast`,
     webFeed: podcast.feedUrl,
     author: { '@id': `${site.url}/#zee` },
-    image: podcast.artwork,
+    image: artwork,
   },
 ];
 ---
@@ -36,7 +37,7 @@ const schema = [
 
   <section class="band" aria-labelledby="latest-title">
     <div class="wrap section split">
-      <Img src={latest.image ?? podcast.artwork} alt={`Cover art for ${latest.title}`} label="[Episode cover art]" loading="eager"
+      <Img src={latest.image ?? artwork} alt={`Cover art for ${latest.title}`} label="[Episode cover art]" loading="eager"
         style="border-radius: 16px; aspect-ratio: 1 / 1; width: 100%; object-fit: cover;" />
       <div class="stack" style="gap: 20px;">
         <p class="eyebrow">Latest episode · {formatDate(latest.date)}{latest.seconds ? ` · ${formatDuration(latest.seconds)}` : ''}</p>

@@ -27,6 +27,7 @@ const fallback: Episode[] = (snapshot as [string, number, string, string, number
 }));
 
 let cache: Episode[] | null = null;
+let showArtwork: string | undefined;
 
 const strip = (html = '') =>
   String(html)
@@ -50,6 +51,7 @@ const toSeconds = (v: unknown): number | undefined => {
 export function parseFeed(xml: string): Episode[] {
   const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '', parseTagValue: false });
   const doc = parser.parse(xml);
+  showArtwork = doc?.rss?.channel?.['itunes:image']?.href ?? doc?.rss?.channel?.image?.url;
   const items = ([] as any[]).concat(doc?.rss?.channel?.item ?? []);
   return items.map((it) => {
     const n = Number(it['itunes:episode']);
@@ -81,6 +83,12 @@ export async function getEpisodes(): Promise<Episode[]> {
     cache = fallback;
   }
   return cache;
+}
+
+// The show cover from Podbean (updates on the site when you change it there); local copy as backup.
+export async function getShowArtwork(): Promise<string> {
+  await getEpisodes();
+  return showArtwork ?? podcast.artwork;
 }
 
 export const episodeCount = (eps: Episode[]) => eps.reduce((m, e) => Math.max(m, e.number ?? 0), 0) || eps.length;
