@@ -4,10 +4,11 @@ import SocialIcons from './SocialIcons.astro';
 ---
 <section class="join" aria-labelledby="join-title">
   <div class="wrap">
-    <h2 id="join-title">Join the Circle</h2>
+    <p class="eyebrow">Welcome gift</p>
+    <h2 id="join-title">{newsletter.offer}</h2>
     <p class="soft">{newsletter.note}</p>
     <!-- Opens the MailerLite sign-up pop-up (form {newsletter.formId}) -->
-    <button class="btn btn-gold ml-onclick-form" type="button" data-ml-form={newsletter.formId}>Sign Up for the Newsletter</button>
+    <button class="btn btn-gold ml-onclick-form" type="button" data-ml-form={newsletter.formId}>Claim My 10% Off</button>
     <p class="soft join-fallback" id="join-fallback" hidden>The sign-up form didn’t open (some browsers block pop-ups). <a href={`mailto:${site.email}?subject=${encodeURIComponent('Add me to the newsletter')}`}>Email us to join</a> and we’ll add you.</p>
     <p class="mute">Unsubscribe anytime. We never sell your data.</p>
     <div class="join-social">
