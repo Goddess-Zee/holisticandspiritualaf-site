@@ -10,7 +10,7 @@ export const site = {
   url: 'https://holisticandspiritualaf.com',
   founder: 'Zipporah Banyay',
   founderAlias: 'Goddess Zee',
-  ogImage: '/og-image.png',
+  ogImage: '/og-image.jpg',
   email: 'holisticandspiritualaf@gmail.com',
   verification: {
     google: 'qAj3K12_AwtSqnEn92dNIdW4ZGlSmbZyKfvECCwZcOk',
@@ -43,7 +43,7 @@ export const podcast = {
   downloads: '6,000+',
   about:
     'Candid, heart-centered conversations on spiritual awakening, energy healing, ancestral wisdom and Divine Feminine embodiment — created for and by Afro-Indigenous and Afro-Diasporic women navigating the sacred journey home to self.',
-  artwork: 'https://pbcdn1.podbean.com/imglogo/image-logo/19464193/2026_Podcast_Post_7cbe46.png',
+  artwork: '/images/podcast/podcast-cover.webp',
   listen: [
     { label: 'Apple Podcasts', href: 'https://podcasts.apple.com/us/podcast/holistic-and-spiritual-af/id1620257468' },
     { label: 'Spotify', href: 'https://open.spotify.com/show/11myO69q7sIzibpqPlQpUg' },
@@ -95,7 +95,7 @@ export const books = [
     kind: 'Book',
     price: '$10.99',
     href: 'https://www.amazon.com/dp/B0D57DR7GX',
-    image: '/images/books/5-stages-of-shadow-work-book-cover.png',
+    image: '/images/books/5-stages-of-shadow-work.webp',
     blurb:
       'A comprehensive guide through every stage of shadow work, with the tools and insight to confront and integrate your inner shadows.',
   },
@@ -104,7 +104,7 @@ export const books = [
     kind: 'Journal',
     price: '$12.99',
     href: 'https://www.amazon.com/dp/B0DBF6CP67',
-    image: '/images/books/5-stages-shadow-work-journal-cover.png',
+    image: '/images/books/shadow-work-journal.webp',
     blurb:
       'The companion journal to uncover, embrace, and heal the hidden aspects of yourself that shape your thoughts, behaviors and relationships.',
   },
@@ -113,7 +113,7 @@ export const books = [
     kind: 'eBook',
     price: '$7.99',
     href: 'https://www.amazon.com/dp/B0DV46KQZ5',
-    image: '/images/books/ancestral-altar-guide-cover.png',
+    image: '/images/books/ancestral-altar-guide.webp',
     blurb:
       'A practical resource for building a lasting connection with your lineage through the sacred practice of altar work.',
   },
@@ -125,7 +125,7 @@ export const courses = [
     kind: '90-min masterclass',
     price: '$25.55',
     href: 'https://holisticnspiritualaf.gumroad.com/l/backtobalancemasterclass',
-    image: '/images/courses/back-to-balance-masterclass.webp',
+    image: '/images/courses/back-to-balance.webp',
     blurb:
       'Tap into the power of your energy, release the blocks holding you back, and realign with your highest self.',
   },
@@ -134,7 +134,7 @@ export const courses = [
     kind: '2-hr masterclass',
     price: '$55.55',
     href: 'https://holisticnspiritualaf.gumroad.com/l/bibleinhoodoo',
-    image: '/images/courses/scripture-and-conjure.png',
+    image: '/images/courses/scripture-and-conjure.webp',
     blurb:
       'How our ancestors transformed scripture into survival, spellwork and liberation. Includes the recording and a PDF booklet of scriptures and rituals.',
   },
@@ -143,7 +143,7 @@ export const courses = [
     kind: '3-part meditation series',
     price: '$33.33',
     href: 'https://holisticnspiritualaf.gumroad.com/l/meditationseries',
-    image: '/images/courses/rest-release-remember.png',
+    image: '/images/courses/rest-release-remember.webp',
     blurb:
       'A guided meditation journey designed to bring Black women back into the wholeness of their bodies, their breath and their becoming.',
   },
@@ -159,7 +159,7 @@ export const events = [
     startISO: '2026-11-22T12:00:00-05:00',
     endISO: '2026-11-22T14:30:00-05:00',
     href: 'https://www.eventbrite.com/e/divination-workshop-tarot-the-language-of-intuition-tickets-2003857039347',
-    image: '/images/events/tarot-intuition-workshop-banner.png',
+    image: '/images/events/tarot-language-of-intuition.webp',
     blurb:
       'Strengthen your intuitive voice and learn to read the cards with confidence in this live divination workshop.',
   },
@@ -171,16 +171,19 @@ export const meditations = [
     blurb:
       'Attune your energy field to the high-vibrational consciousness of the Age of Aquarius — unity, higher wisdom and multidimensional awareness.',
     youtubeId: '8acZNBqpGfo',
+    image: '/images/meditations/energy-attunement.webp',
   },
   {
     title: 'Divine Code Meditation',
     blurb: 'Visualize and activate Divine codes within your chakra system and reconnect to your divine self.',
     youtubeId: 'F82AC85Un6I',
+    image: '/images/meditations/divine-code.webp',
   },
   {
     title: 'Reprogram Your Subconscious Mind',
     blurb: 'Replace negative thought patterns and beliefs with empowering intentions to change your life.',
     youtubeId: 'cBurpDsL1VM',
+    image: '/images/meditations/reprogram-subconscious.webp',
   },
 ];
 

@@ -5,7 +5,9 @@ import { meditations, insightTimer, courses } from '../data/site';
 const series = courses.find((c) => /rest, release/i.test(c.title));
 ---
 <Base title="Guided Meditations" description="Guided meditations by Goddess Zee to shift your frequency, activate your Divine Feminine codes and realign your energy — on YouTube and Insight Timer.">
-  <section class="wrap" style="padding-top: 80px; padding-bottom: 56px;">
+  <section class="wrap" style="padding-top: 72px; padding-bottom: 32px;">
+    <img src="/images/meditations/circle.webp" alt="A circle of Black women meditating beneath a radiant star" width="1536" height="1024" loading="eager"
+      style="width: 100%; max-height: 460px; object-fit: cover; border-radius: 16px; margin-bottom: 48px;" />
     <div class="stack" style="gap: 18px; max-width: 780px;">
       <p class="eyebrow">Guided meditations by Goddess Zee</p>
       <h1>Upgrade your frequency and <em>activate your codes</em></h1>
@@ -20,7 +22,7 @@ const series = courses.find((c) => /rest, release/i.test(c.title));
         {meditations.map((m) => (
           <article class="stack" style="gap: 14px;">
             <a class="yt" href={`https://www.youtube.com/watch?v=${m.youtubeId}`} rel="noopener" aria-label={`Watch ${m.title} on YouTube`}>
-              <img src={`https://i.ytimg.com/vi/${m.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" />
+              <img src={m.image ?? `https://i.ytimg.com/vi/${m.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" />
               <span class="yt-play" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"></path></svg></span>
             </a>
             <h3 style="font-size: 26px;">{m.title}</h3>
