@@ -228,13 +228,17 @@ button.pill:hover { border-color: var(--gold-light); }
 .social-lg a:hover { border-color: var(--gold-light); }
 
 /* Top bar */
-.topbar { background: var(--bg-3); border-bottom: 1px solid var(--line); font-size: 14px; }
+.topbar { background: #F3E6CF; border-bottom: 1px solid #E2CFAE; font-size: 14px; font-weight: 500; }
 .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 2px; padding-bottom: 2px; }
-.topbar-msg { color: var(--text-soft); text-decoration: none; }
-.topbar-msg:hover { color: var(--gold-light); }
-.topbar .social-icons a { width: 36px; height: 36px; }
+.topbar-msg { color: #3B2716; text-decoration: none; }
+.topbar-msg:hover { color: #6B3F14; text-decoration: underline; text-underline-offset: 3px; }
+.topbar .social-icons a { width: 36px; height: 36px; color: #3B2716; }
+.topbar .social-icons a:hover { color: #6B3F14; background: rgba(59, 39, 22, 0.1); }
+.topbar :focus-visible { outline-color: #3B2716; }
 @media (max-width: 640px) { .topbar-msg { font-size: 13px; } .topbar .social-icons { gap: 0; } .topbar .social-icons a { width: 32px; height: 32px; } }
 @media (max-width: 400px) { .topbar-msg { display: none; } .topbar .wrap { justify-content: center; } }
 
 .footer-social { display: flex; align-items: center; gap: 8px; color: var(--text-soft); }
 .join-social { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--line-2); width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+.join-fallback { margin-top: 4px; font-size: 15px; }

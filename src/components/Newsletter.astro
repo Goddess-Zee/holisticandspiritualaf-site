@@ -1,5 +1,5 @@
 ---
-import { newsletter } from '../data/site';
+import { newsletter, site } from '../data/site';
 import SocialIcons from './SocialIcons.astro';
 ---
 <section class="join" aria-labelledby="join-title">
@@ -8,6 +8,7 @@ import SocialIcons from './SocialIcons.astro';
     <p class="soft">{newsletter.note}</p>
     <!-- Opens the MailerLite sign-up pop-up (form {newsletter.formId}) -->
     <button class="btn btn-gold ml-onclick-form" type="button" data-ml-form={newsletter.formId}>Sign Up for the Newsletter</button>
+    <p class="soft join-fallback" id="join-fallback" hidden>The sign-up form didn’t open (some browsers block pop-ups). <a href={`mailto:${site.email}?subject=${encodeURIComponent('Add me to the newsletter')}`}>Email us to join</a> and we’ll add you.</p>
     <p class="mute">Unsubscribe anytime. We never sell your data.</p>
     <div class="join-social">
       <p class="eyebrow" style="font-size: 12px;">Or follow along</p>
@@ -17,10 +18,18 @@ import SocialIcons from './SocialIcons.astro';
 </section>
 
 <script>
+  // Opens the MailerLite pop-up. If it hasn't appeared after a moment
+  // (form inactive or blocked by the browser), show an email fallback instead.
   document.querySelectorAll<HTMLButtonElement>('[data-ml-form]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const ml = (window as any).ml;
+      const before = document.querySelectorAll('iframe, [class*="ml-"], [id^="mlb2"]').length;
       if (typeof ml === 'function') ml('show', btn.dataset.mlForm, true);
+      setTimeout(() => {
+        const after = document.querySelectorAll('iframe, [class*="ml-"], [id^="mlb2"]').length;
+        const fallback = document.getElementById('join-fallback');
+        if (fallback && after <= before) fallback.hidden = false;
+      }, 2500);
     });
   });
 </script>
