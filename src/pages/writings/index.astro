@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getWritings, readingTime, formatLongDate, excerpt } from '../../lib/writings';
+import { getWritings, readingTime, formatLongDate, excerpt, coverFor } from '../../lib/writings';
 
 const writings = await getWritings();
 const themes = [...new Set(writings.map((w) => w.data.theme))];
@@ -22,9 +22,7 @@ const themes = [...new Set(writings.map((w) => w.data.theme))];
         {writings.map((w) => (
           <article class="post-card" id={w.data.theme.toLowerCase().replace(/[^a-z]+/g, '-')}>
             <a href={`/writings/${w.id}`} class="post-link">
-              {w.data.image
-                ? <img src={w.data.image} alt="" loading="lazy" decoding="async" class="post-img" />
-                : <div class="post-img post-img-empty" aria-hidden="true"></div>}
+              <img src={coverFor(w)} alt="" loading="lazy" decoding="async" class="post-img" />
               <span class="eyebrow" style="font-size: 12px;">{w.data.theme}</span>
               <h2 class="post-title">{w.data.title}</h2>
               <span class="soft post-ex">{w.data.subtitle ?? excerpt(w.body)}</span>

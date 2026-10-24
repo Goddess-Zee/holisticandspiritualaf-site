@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import { site, podcast, sessions, books, courses, events, libraryTags, press } from '../data/site';
-import { getWritings } from '../lib/writings';
+import { getWritings, coverFor } from '../lib/writings';
 
 const published = await getWritings();
 const featuredWritings = [...published.filter((w) => w.data.featured), ...published.filter((w) => !w.data.featured)]
   .slice(0, 3)
-  .map((w) => ({ title: w.data.title, theme: w.data.theme, href: `/writings/${w.id}`, image: w.data.image }));
+  .map((w) => ({ title: w.data.title, theme: w.data.theme, href: `/writings/${w.id}`, image: coverFor(w) }));
 import { getEpisodes, episodeCount, formatDate, shortTitle } from '../lib/podcast';
 
 const episodes = await getEpisodes();
@@ -46,8 +46,8 @@ const schema = [
           <div><dt class="visually-hidden">Practice</dt><dd style="margin:0; font-family: var(--serif); font-size: 40px; color: var(--text-strong); line-height: 1;">20+ yrs</dd><span class="mute">of practice</span></div>
         </dl>
       </div>
-      <Img src="/images/home/goddess-zee-portrait.webp" alt="Goddess Zee" label="[Portrait of Goddess Zee]" loading="eager"
-        style="border-radius: 240px 240px 16px 16px; height: 560px; width: 100%; object-fit: cover;" />
+      <Img src="/images/home/goddess-zee-closeup.webp" alt="Goddess Zee" label="[Portrait of Goddess Zee]" loading="eager"
+        style="border-radius: 240px 240px 16px 16px; height: 560px; width: 100%; object-fit: cover; object-position: 50% 20%;" />
     </div>
   </section>
 

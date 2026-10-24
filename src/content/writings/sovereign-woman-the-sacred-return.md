@@ -6,6 +6,7 @@ featured: true
 draft: false
 bookCandidate: true
 source: "substack:174799850.sovereign-woman-the-sacred-return"
+image: "https://substack-post-media.s3.amazonaws.com/public/images/a0fcbc51-c5ec-4f80-ba9f-a0d8ff95aacb_1024x1536.png"
 ---
 
 Imagine living your whole life and one day realizing that it’s like a game of minecraft… What about if the movies you’d watched for entertainment were actually based on alternative realities that aren’t fiction. That’s exactly what transitioning from 3rd density to 5th density feels like. For some people this will sound unbelievable but for those going through the shift it will resonate and that’s who this is for. At the beginning of the year I spoke of this being a 9 year and time for transformation.
@@ -25,8 +26,6 @@ I want to share five powerful ways to begin living sovereignly rooted in divine 
 I have a bit of an analytical side to me and I like to break things down in a way that my brain can process and blend the understanding into the spiritual side of things. That’s how embodiment works for me. Sometimes that’s from experience turned into wisdom and other times it’s a remembrance of the codes that I carry. As the rise of divine feminine begins to activate the planet, my downloads and transmissions also rise. I encourage you to take this information and decipher whether or not this resonates with your ancient codes.
 
 With that being said, let’s get into the how of it! How can you start to embody sovereignty and not just regurgitate the trending term on social media. I’m gonna break this down in 5 ways but I’m sure there’s others, like I said be aware of your own inner compass.
-
-![](https://substack-post-media.s3.amazonaws.com/public/images/a0fcbc51-c5ec-4f80-ba9f-a0d8ff95aacb_1024x1536.png)
 
 **1\. Come Home to Your Body**
 

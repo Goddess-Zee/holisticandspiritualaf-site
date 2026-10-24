@@ -21,3 +21,12 @@ export const excerpt = (body = '', n = 180) => {
     .trim();
   return text.length <= n ? text : text.slice(0, text.lastIndexOf(' ', n)) + '…';
 };
+
+// Cover image for cards: the essay's own image, or a themed image from the site.
+const themeCovers: Record<string, string> = {
+  'Ancestral Lineage': '/images/home/ancestral-women.webp',
+  'Shadow Work & Healing': '/images/consultations/altar-tools.webp',
+  'The Sovereign Feminine': '/images/consultations/sovereign-matriarch.webp',
+  'Spiritual Practice': '/images/meditations/circle.webp',
+};
+export const coverFor = (w: Writing) => w.data.image ?? themeCovers[w.data.theme];
