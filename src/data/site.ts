@@ -205,6 +205,6 @@ export const libraryTags = [
 export const newsletter = {
   account: '1250967',
   formId: 'bf10ui',
-  offer: 'Get 10% off your first course or masterclass',
-  note: 'Join the Circle for monthly energy updates, early access to classes and new episodes — and your welcome gift.',
+  offer: 'Join the Circle and get 10% off your first course, consultation or masterclass',
+  note: 'Monthly energy updates, early access to classes and new episodes in your inbox. Your code arrives in your welcome email.',
 };
