@@ -11,7 +11,6 @@ export const site = {
   founder: 'Zipporah Banyay',
   founderAlias: 'Goddess Zee',
   ogImage: '/og-image.jpg',
-  email: 'holisticandspiritualaf@gmail.com',
   verification: {
     google: 'qAj3K12_AwtSqnEn92dNIdW4ZGlSmbZyKfvECCwZcOk',
     facebook: '0n8o2b1u326bmx25b7bxgent9zahiy',
@@ -23,13 +22,20 @@ type NavLink = { label: string; href: string; external?: boolean; note?: string 
 type NavItem = NavLink | { label: string; children: NavLink[] };
 
 export const nav: NavItem[] = [
-  { label: 'About', href: '/about' },
+  {
+    label: 'About',
+    children: [
+      { label: 'My Story', href: '/about', note: 'Goddess Zee and Holistic and Spiritual AF' },
+      { label: 'Contact', href: '/contact', note: 'Questions, collaborations and press' },
+    ],
+  },
   {
     label: 'Podcast & Videos',
     children: [
       { label: 'Podcast', href: '/podcast', note: 'New episodes every other Friday' },
       { label: 'Videos', href: '/videos', note: 'Long-form conversations on YouTube' },
       { label: 'Meditations', href: '/meditations', note: 'Guided practices for your path' },
+      { label: 'Be a Guest', href: '/be-a-guest', note: 'Apply to join the podcast' },
     ],
   },
   {

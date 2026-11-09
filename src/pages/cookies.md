@@ -36,4 +36,4 @@ You can change your choice at any time with the **Cookie settings** link at the 
 
 ## Questions
 
-Email [holisticandspiritualaf@gmail.com](mailto:holisticandspiritualaf@gmail.com). See also our [Privacy Policy](/privacy).
+Send us a message through our [contact form](/contact). See also our [Privacy Policy](/privacy).

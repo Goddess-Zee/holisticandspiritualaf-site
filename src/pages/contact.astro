@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import PathFinder from '../components/PathFinder.astro';
-import { site } from '../data/site';
 ---
 <Base title="Contact" description="Contact Goddess Zee and Holistic and Spiritual AF about sessions, classes, speaking, collaborations or press.">
   <section class="wrap" style="padding-top: 80px; padding-bottom: 88px;">
@@ -10,7 +9,6 @@ import { site } from '../data/site';
         <p class="eyebrow">Contact</p>
         <h1>Drop us <em>a line</em></h1>
         <p class="lede">Questions about a session, a class or a course? Speaking, collaborations or press? Send a message and you’ll hear back by email.</p>
-        <p class="soft">Prefer email? Write to <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
         <p class="soft">Want to be on the podcast? Use the <a href="/be-a-guest">guest application</a> instead.</p>
         <PathFinder />
       </div>
@@ -25,7 +23,9 @@ import { site } from '../data/site';
           <label for="c-topic">What’s this about?</label>
           <select id="c-topic" name="topic" required>
             <option value="">Choose one</option>
-            <option>Consultations or mentorship</option>
+            <option value="Consultations or mentorship">Consultations or mentorship</option>
+            <option value="The Sovereign Matriarch mentorship">The Sovereign Matriarch mentorship</option>
+            <option value="Join the newsletter">Join the newsletter</option>
             <option>Classes and events</option>
             <option>Books and courses</option>
             <option>Speaking or collaboration</option>
@@ -39,4 +39,12 @@ import { site } from '../data/site';
       </form>
     </div>
   </section>
+
+  <script>
+    // Links like /contact?topic=mentorship arrive with the right topic already chosen.
+    const topics: Record<string, string> = { mentorship: 'The Sovereign Matriarch mentorship', newsletter: 'Join the newsletter' };
+    const wanted = topics[new URLSearchParams(location.search).get('topic') ?? ''];
+    const select = document.getElementById('c-topic') as HTMLSelectElement | null;
+    if (wanted && select) select.value = wanted;
+  </script>
 </Base>

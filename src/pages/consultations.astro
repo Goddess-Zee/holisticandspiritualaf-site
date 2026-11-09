@@ -5,7 +5,6 @@ import PathFinder from '../components/PathFinder.astro';
 import { site, sessions } from '../data/site';
 
 const paid = sessions.filter((s) => s.price.startsWith('$'));
-const mentorshipMail = `mailto:${site.email}?subject=${encodeURIComponent("I'm interested in The Sovereign Matriarch mentorship")}&body=${encodeURIComponent("Hi Goddess Zee, my name is ______ and I'd like to know more about the private mentorship program.")}`;
 
 const schema = paid.map((s) => ({
   '@context': 'https://schema.org',
@@ -70,8 +69,7 @@ const schema = paid.map((s) => ({
         <h2 id="sm-title">The Sovereign Matriarch</h2>
         <p class="soft" style="font-size: 18px;"><em>Ancestral Healing &amp; Divine Feminine Embodiment.</em> A private, 12-week container for the woman who is ready to stop seeking outside of herself and begin her sacred descent into the heart of her own power.</p>
         <p class="soft">It is a guided journey to heal the wounds of the maternal line, transform, and finally ascend to the throne of your own life.</p>
-        <div><a class="btn btn-gold" href={mentorshipMail}>Ask about the mentorship</a></div>
-        <p class="mute">Opens an email to {site.email}</p>
+        <div><a class="btn btn-gold" href="/contact?topic=mentorship">Ask about the mentorship</a></div>
       </div>
     </div>
   </section>

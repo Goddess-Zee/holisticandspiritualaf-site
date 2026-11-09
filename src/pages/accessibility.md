@@ -27,4 +27,4 @@ Some features are provided by other services — Cal.com (booking), Stripe (paym
 
 ## Tell us about a barrier
 
-If anything on this site is hard to use, please let us know and we’ll do our best to help and to fix it. Email [holisticandspiritualaf@gmail.com](mailto:holisticandspiritualaf@gmail.com) with the page and what happened. We aim to reply within 5 business days.
+If anything on this site is hard to use, please let us know and we’ll do our best to help and to fix it. Send us a message through our [contact form](/contact) with the page and what happened. We aim to reply within 5 business days.

@@ -34,7 +34,7 @@ By entering your email address on holisticandspiritualaf.com, you consent to rec
 - Promotional offers
 - Updates related to products, services, or community offerings
 
-We respect your inbox and your autonomy. You may unsubscribe at any time by clicking the “unsubscribe” link included in every email or by contacting us at [holisticandspiritualaf@gmail.com](mailto:holisticandspiritualaf@gmail.com).
+We respect your inbox and your autonomy. You may unsubscribe at any time by clicking the “unsubscribe” link included in every email or by reaching us through our [contact form](/contact).
 
 Your email address will never be sold or shared with unrelated third parties.
 
@@ -96,7 +96,7 @@ We reserve the right to refuse or cancel orders.
 
 ## 8. Refunds and Cancellations
 
-Refund terms are specified per product or service. If you believe a refund is owed, contact us: [holisticandspiritualaf@gmail.com](mailto:holisticandspiritualaf@gmail.com)
+Refund terms are specified per product or service. If you believe a refund is owed, contact us through our [contact form](/contact)
 
 ## 9. Third-Party Sites
 
@@ -121,4 +121,4 @@ We may update these Terms. Continued use of the site means you accept any change
 
 ## 13. Contact
 
-If you have questions, concerns, or want to request changes to your personal data: [holisticandspiritualaf@gmail.com](mailto:holisticandspiritualaf@gmail.com)
+If you have questions, concerns, or want to request changes to your personal data, reach us through our [contact form](/contact)

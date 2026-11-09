@@ -73,7 +73,7 @@ You can:
 - Access, update, or delete your data
 - Request information about how your info is used
 
-Contact us: [holisticandspiritualaf@gmail.com](mailto:holisticandspiritualaf@gmail.com)
+Contact us through our [contact form](/contact).
 
 ## 8. Children
 
