@@ -242,3 +242,9 @@ button.pill:hover { border-color: var(--gold-light); }
 .join-social { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--line-2); width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 
 .join-fallback { margin-top: 4px; font-size: 15px; }
+
+/* 20-minute path-finder call and series bundle */
+.pathfinder, .series-banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 40px; padding: 28px 32px; border: 1px dashed var(--gold); border-radius: 16px; background: rgba(201, 139, 62, 0.07); }
+.pathfinder > .stack, .series-banner > .stack:first-child { flex: 1 1 380px; }
+.pathfinder h3, .series-banner h3 { font-size: 30px; }
+.series-banner { margin-bottom: 32px; border-style: solid; }

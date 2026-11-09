@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
+import PathFinder from '../components/PathFinder.astro';
 import { site, sessions } from '../data/site';
 
 const paid = sessions.filter((s) => s.price.startsWith('$'));
@@ -35,7 +36,8 @@ const schema = paid.map((s) => ({
 
   <section class="band" id="sessions" aria-labelledby="sessions-title">
     <div class="wrap section">
-      <h2 id="sessions-title" style="margin-bottom: 40px;">Spiritual consultations</h2>
+      <h2 id="sessions-title" style="margin-bottom: 32px;">Spiritual consultations</h2>
+      <div style="margin-bottom: 32px;"><PathFinder /></div>
       <div class="cards">
         {paid.map((s) => (
           <article class={`card${s.featured ? ' featured' : ''}`}>

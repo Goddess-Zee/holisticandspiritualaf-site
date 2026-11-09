@@ -1,0 +1,11 @@
+---
+import { pathFinder } from '../data/site';
+---
+<div class="pathfinder">
+  <div class="stack" style="gap: 8px;">
+    <p class="eyebrow" style="font-size: 12px;">{pathFinder.length} · {pathFinder.price}</p>
+    <h3>{pathFinder.title}</h3>
+    <p class="soft">{pathFinder.blurb}</p>
+  </div>
+  <a class="btn btn-gold" href={pathFinder.href}>{pathFinder.cta}</a>
+</div>

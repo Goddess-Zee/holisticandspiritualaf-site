@@ -53,6 +53,17 @@ export const podcast = {
 };
 
 // Booking + payment via Cal.com (connected to Stripe)
+// 20-minute call to help someone choose the right offering.
+// TODO: create a 20-minute event type in Cal.com with the link ending /20min
+export const pathFinder = {
+  title: 'Not sure where to start?',
+  blurb: 'Book a 20-minute call to find your path. We’ll talk through where you are and which session, class or course fits you best.',
+  length: '20 minutes',
+  price: 'Free',
+  cta: 'Book a 20-Minute Call',
+  href: 'https://cal.com/zipporah-banyay-enw72v/20min',
+};
+
 export const sessions = [
   {
     title: '30 Min Spiritual Consultation',
@@ -150,20 +161,72 @@ export const courses = [
 ];
 
 // TODO: manage in Sanity; for now edit here
+// Classes: list in date order. Past ones move to "Past classes" automatically.
+// Images for new classes load straight from Eventbrite.
 export const events = [
   {
-    title: 'Tarot: The Language of Intuition',
+    title: 'Tarot & The Language of Intuition',
+    series: 'Divination Series · Part I',
     kind: 'Divination workshop · Online',
     date: 'Sunday, November 22, 2026',
     time: '12:00–2:30 PM EST',
     startISO: '2026-11-22T12:00:00-05:00',
     endISO: '2026-11-22T14:30:00-05:00',
-    href: 'https://www.eventbrite.com/e/divination-workshop-tarot-the-language-of-intuition-tickets-2003857039347',
+    price: '$27',
+    href: 'https://www.eventbrite.com/e/2003857039347?aff=oddtdtcreator',
     image: '/images/events/tarot-language-of-intuition.webp',
     blurb:
-      'Strengthen your intuitive voice and learn to read the cards with confidence in this live divination workshop.',
+      'Learn tarot basics and practice beginner-friendly readings in small breakout groups. No experience needed.',
+  },
+  {
+    title: 'Pendulum Dowsing & Intuition',
+    series: 'Divination Series · Part II',
+    kind: 'Divination workshop · Online',
+    date: 'Sunday, December 13, 2026',
+    time: '12:00–2:30 PM EST',
+    startISO: '2026-12-13T12:00:00-05:00',
+    endISO: '2026-12-13T14:30:00-05:00',
+    price: '$27',
+    href: 'https://www.eventbrite.com/e/2003865167659?aff=oddtdtcreator',
+    image: 'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1196518369%2F2322771494833%2F1%2Foriginal.20261024-220452?crop=focalpoint&fit=crop&w=1880&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.5&fp-y=0.5&s=8a5d530dd36b03f20deece2651e3f09c',
+    blurb:
+      'Pendulum divination, spiritual protection and energy awareness in a live, interactive circle. Join the series or come on its own.',
+  },
+  {
+    title: "Sistah's Manifesting with Intention: A Vision Board Circle",
+    kind: 'Vision board circle · Online',
+    date: 'Wednesday, December 16, 2026',
+    time: '7:00–9:00 PM EST',
+    startISO: '2026-12-16T19:00:00-05:00',
+    endISO: '2026-12-16T21:00:00-05:00',
+    href: 'https://www.eventbrite.com/e/2004177340376?aff=oddtdtcreator',
+    image: 'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1196969722%2F2322771494833%2F1%2Foriginal.20261031-012842?crop=focalpoint&fit=crop&w=1880&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.5&fp-y=0.5&s=feda1091e26dbd7774eaa72be3520d84',
+    blurb:
+      'Reflect on the year, set your intentions and create your 2027 vision board alongside other women in a two-hour live circle.',
+  },
+  {
+    title: 'Flame Divination: The Sacred Language of Fire',
+    series: 'Divination Series · Part III',
+    kind: 'Divination workshop · Online',
+    date: 'Sunday, January 10, 2027',
+    time: '12:00–2:30 PM EST',
+    startISO: '2027-01-10T12:00:00-05:00',
+    endISO: '2027-01-10T14:30:00-05:00',
+    price: '$27',
+    href: 'https://www.eventbrite.com/e/2003882194587?aff=oddtdtcreator',
+    image: 'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1196545116%2F2322771494833%2F1%2Foriginal.20261025-170524?crop=focalpoint&fit=crop&w=1880&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.5&fp-y=0.5&s=27f0e465be7bba0c0617feedc2f526d6',
+    blurb:
+      'An introduction to pyromancy: fire symbolism, reading a candle flame and grounding practices. No experience needed.',
   },
 ];
+
+// The three-part divination series, sold as a bundle on the Part I ticket page
+export const divinationSeries = {
+  title: 'The Divination Series',
+  blurb: 'Tarot, pendulum and flame — three live workshops to strengthen your intuitive voice.',
+  price: '$81 for all three',
+  href: 'https://www.eventbrite.com/e/2003857039347?aff=oddtdtcreator',
+};
 
 export const meditations = [
   {

@@ -1,10 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
-import { site, events } from '../data/site';
+import { site, events, divinationSeries } from '../data/site';
 
 const now = Date.now();
-const upcoming = events.filter((e) => new Date(e.endISO).getTime() >= now);
+const byDate = (a: { startISO: string }, b: { startISO: string }) => Date.parse(a.startISO) - Date.parse(b.startISO);
+const upcoming = events.filter((e) => new Date(e.endISO).getTime() >= now).sort(byDate);
+const seriesLeft = upcoming.filter((e) => 'series' in e && e.series).length;
 const past = events.filter((e) => new Date(e.endISO).getTime() < now);
 
 const schema = upcoming.map((e) => ({
@@ -18,7 +20,7 @@ const schema = upcoming.map((e) => ({
   eventStatus: 'https://schema.org/EventScheduled',
   location: { '@type': 'VirtualLocation', url: e.href },
   organizer: { '@id': `${site.url}/#zee` },
-  offers: { '@type': 'Offer', url: e.href, availability: 'https://schema.org/InStock' },
+  offers: { '@type': 'Offer', url: e.href, availability: 'https://schema.org/InStock', ...('price' in e && e.price ? { price: String(e.price).replace(/[^0-9.]/g, ''), priceCurrency: 'USD' } : {}) },
 }));
 ---
 <Base title="Classes & Events" description="Live healing and spiritual development classes with Goddess Zee — shadow work, intuitive practice, divination and holistic healing." schema={schema}>
@@ -32,7 +34,20 @@ const schema = upcoming.map((e) => ({
 
   <section class="band" aria-labelledby="up-title">
     <div class="wrap section">
-      <h2 id="up-title" style="margin-bottom: 40px;">Upcoming</h2>
+      <h2 id="up-title" style="margin-bottom: 32px;">Upcoming</h2>
+      {seriesLeft >= 2 && (
+        <div class="series-banner">
+          <div class="stack" style="gap: 6px;">
+            <p class="eyebrow" style="font-size: 12px;">Save with the bundle</p>
+            <h3>{divinationSeries.title}</h3>
+            <p class="soft">{divinationSeries.blurb}</p>
+          </div>
+          <div class="stack" style="gap: 10px; align-items: flex-start;">
+            <span class="price-tag">{divinationSeries.price}</span>
+            <a class="btn btn-gold" href={divinationSeries.href}>Get the Series Pass</a>
+          </div>
+        </div>
+      )}
       {upcoming.length === 0 && (
         <p class="soft">New classes are being planned. Join the newsletter below to hear first.</p>
       )}
@@ -41,9 +56,9 @@ const schema = upcoming.map((e) => ({
           <article class="card" style="padding: 0; overflow: hidden; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 0;">
             <Img src={e.image} alt={`${e.title} banner`} label={`[${e.title}]`} style="width: 100%; height: 100%; min-height: 280px; object-fit: cover;" />
             <div class="stack" style="gap: 16px; padding: 40px;">
-              <p class="eyebrow">{e.kind}</p>
+              <p class="eyebrow">{'series' in e && e.series ? e.series : e.kind}</p>
               <h3 style="font-size: clamp(30px, 3.4vw, 40px); font-weight: 500;">{e.title}</h3>
-              <p style="font-size: 18px;"><strong>{e.date}</strong><br>{e.time}</p>
+              <p style="font-size: 18px;"><strong>{e.date}</strong><br>{e.time} · Online{'price' in e && e.price ? ` · ${e.price}` : ''}</p>
               <p class="soft">{e.blurb}</p>
               <div class="btns" style="align-items: center;">
                 <a class="btn btn-gold" href={e.href} rel="noopener">Get Your Ticket</a>
@@ -60,7 +75,7 @@ const schema = upcoming.map((e) => ({
     <section class="wrap section" aria-labelledby="past-title">
       <h2 id="past-title" style="margin-bottom: 32px;">Past classes</h2>
       <ul class="ep-list">
-        {past.map((e) => <li class="ep" style="grid-template-columns: 1fr;"><div><p class="mute">{e.date}</p><h3>{e.title}</h3></div></li>)}
+        {[...past].reverse().map((e) => <li class="ep" style="grid-template-columns: 1fr;"><div><p class="mute">{e.date}</p><h3>{e.title}</h3></div></li>)}
       </ul>
     </section>
   )}
