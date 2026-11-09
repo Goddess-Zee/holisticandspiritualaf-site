@@ -39,8 +39,13 @@ const schema = [
 <Base schema={schema}>
   <section class="hero-altar" aria-labelledby="hero-title">
     <div class="hero-bg" aria-hidden="true">
-      <img src="/images/home/ancestral-altar.webp" srcset="/images/home/ancestral-altar-900.webp 900w, /images/home/ancestral-altar.webp 1672w" sizes="100vw" alt="" width="1672" height="941" fetchpriority="high" decoding="async" />
-      <div class="hero-glow"></div>
+      <div class="hero-stage">
+        <div class="hero-drift">
+          <img class="hero-photo" src="/images/home/ancestral-altar.webp" srcset="/images/home/ancestral-altar-900.webp 900w, /images/home/ancestral-altar.webp 1672w" sizes="100vw" alt="" width="1672" height="941" fetchpriority="high" decoding="async" />
+          <div class="flame-halo"></div>
+          <div class="altar-flame"><div class="flame-sway"><div class="flame-breath"><img src="/images/home/altar-flame.png" alt="" width="160" height="252" decoding="async" /></div></div></div>
+        </div>
+      </div>
       <div class="hero-embers"><span style="--x:38%;--d:0s;--t:9s;--s:4px"></span><span style="--x:44%;--d:2.5s;--t:11s;--s:3px"></span><span style="--x:47%;--d:5s;--t:10s;--s:5px"></span><span style="--x:52%;--d:1.2s;--t:12s;--s:3px"></span><span style="--x:41%;--d:7s;--t:9.5s;--s:4px"></span><span style="--x:56%;--d:3.5s;--t:13s;--s:3px"></span><span style="--x:35%;--d:6s;--t:11s;--s:3px"></span><span style="--x:60%;--d:8.5s;--t:10s;--s:4px"></span><span style="--x:49%;--d:10s;--t:12s;--s:3px"></span><span style="--x:63%;--d:4.2s;--t:14s;--s:3px"></span><span style="--x:30%;--d:9s;--t:12s;--s:4px"></span><span style="--x:68%;--d:1.8s;--t:11s;--s:3px"></span></div>
       <div class="hero-shade"></div>
     </div>
@@ -64,8 +69,10 @@ const schema = [
 
   <section class="band" aria-labelledby="about-title">
     <div class="wrap section split" style="gap: 64px;">
-      <Img src="/images/home/goddess-zee-closeup.webp" alt="Goddess Zee"
-        style="border-radius: 240px 240px 16px 16px; height: 520px; width: 100%; object-fit: cover; object-position: 50% 20%;" />
+      <div class="gilded-arch">
+        <Img src="/images/home/goddess-zee-closeup.webp" alt="Goddess Zee"
+          style="display: block; border-radius: 237px 237px 13px 13px; height: 520px; width: 100%; object-fit: cover; object-position: 50% 20%;" />
+      </div>
       <div class="stack" style="gap: 18px;">
         <p class="eyebrow">About Goddess Zee</p>
         <h2 id="about-title">20+ years of ancestral healing and spiritual practice</h2>

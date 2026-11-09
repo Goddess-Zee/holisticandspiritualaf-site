@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site, nav, social, newsletter as mailerlite } from '../data/site';
+import { site, nav, navCta, social, newsletter as mailerlite } from '../data/site';
 import Newsletter from '../components/Newsletter.astro';
 import SocialIcons from '../components/SocialIcons.astro';
 import CookieBanner from '../components/CookieBanner.astro';
@@ -16,7 +16,8 @@ const { title, description = site.description, image = site.ogImage, schema = []
 const pageTitle = title ? `${title} | ${site.name}` : `${site.name}: ${site.tagline}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(image, site.url).href;
-const path = Astro.url.pathname.replace(/\.html$/, '');
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1');
+const isHere = (href: string) => path === href || (href !== '/' && path.startsWith(href + '/'));
 
 const baseSchema = [
   {
@@ -88,13 +89,28 @@ const baseSchema = [
       <a class="brand" href="/">{site.shortName}</a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
       <nav id="main-nav" class="main-nav" aria-label="Main">
-        <ul>
-          {nav.map((n) => (
-            <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined} {...(n.external ? { rel: 'noopener' } : {})}>{n.label}</a></li>
+        <ul class="nav-top">
+          {nav.map((n, i) => 'children' in n ? (
+            <li class="has-sub">
+              <button type="button" class="sub-toggle" aria-expanded="false" aria-controls={`sub-${i}`} data-current={n.children.some((c) => isHere(c.href)) ? '' : undefined}>
+                {n.label}<svg class="caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="sub" id={`sub-${i}`}>
+                {n.children.map((c) => (
+                  <li><a href={c.href} aria-current={isHere(c.href) ? 'page' : undefined} {...(c.external ? { rel: 'noopener' } : {})}>
+                    <span class="sub-label">{c.label}{c.external && <span aria-hidden="true"> ↗</span>}</span>
+                    {c.note && <span class="sub-note">{c.note}</span>}
+                  </a></li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li><a href={n.href} aria-current={isHere(n.href) ? 'page' : undefined}>{n.label}</a></li>
           ))}
+          <li class="nav-cta-mobile"><a class="btn btn-gold" href={navCta.href}>{navCta.label}</a></li>
         </ul>
       </nav>
-      <a class="btn btn-gold header-cta" href="/consultations">Book a Session</a>
+      <a class="btn btn-gold header-cta" href={navCta.href}>{navCta.label}</a>
     </div>
   </header>
 
@@ -116,10 +132,29 @@ const baseSchema = [
   <script>
     const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
     const menu = document.getElementById('main-nav');
+    const toggles = [...document.querySelectorAll<HTMLButtonElement>('.sub-toggle')];
+    const closeAll = (except?: HTMLButtonElement) => toggles.forEach((t) => { if (t !== except) t.setAttribute('aria-expanded', 'false'); });
     btn?.addEventListener('click', () => {
       const open = menu?.classList.toggle('open') ?? false;
       btn.setAttribute('aria-expanded', String(open));
     });
+    toggles.forEach((t) => {
+      t.addEventListener('click', () => {
+        const open = t.getAttribute('aria-expanded') !== 'true';
+        closeAll(t);
+        t.setAttribute('aria-expanded', String(open));
+      });
+    });
+    document.addEventListener('click', (e) => { if (!(e.target as Element).closest('.has-sub')) closeAll(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const open = toggles.find((t) => t.getAttribute('aria-expanded') === 'true');
+      if (open) { closeAll(); open.focus(); }
+    });
+    // Close a dropdown once keyboard focus moves out of it
+    document.querySelectorAll('.has-sub').forEach((li) => li.addEventListener('focusout', (e) => {
+      if (!li.contains((e as FocusEvent).relatedTarget as Node)) li.querySelector('.sub-toggle')?.setAttribute('aria-expanded', 'false');
+    }));
   </script>
 </body>
 </html>

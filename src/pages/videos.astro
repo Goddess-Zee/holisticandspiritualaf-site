@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, videos, youtubeChannel } from '../data/site';
+
+const [featured, ...rest] = videos;
+const thumb = (id: string) => `https://i.ytimg.com/vi_webp/${id}/maxresdefault.webp`;
+
+const schema = videos.map((v) => ({
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: v.title,
+  thumbnailUrl: `https://i.ytimg.com/vi/${v.id}/maxresdefault.jpg`,
+  contentUrl: `https://www.youtube.com/watch?v=${v.id}`,
+  embedUrl: `https://www.youtube-nocookie.com/embed/${v.id}`,
+  author: { '@id': `${site.url}/#zee` },
+}));
+---
+<Base title="Videos" description="Long-form conversations with Goddess Zee on ancestral healing, energy, intuition, rootwork and the Divine Feminine, from the Holistic and Spiritual AF YouTube channel." schema={schema}>
+  <section class="wrap" style="padding-top: 80px; padding-bottom: 48px;">
+    <div class="stack" style="gap: 18px; max-width: 760px;">
+      <p class="eyebrow">Podcast &amp; Videos</p>
+      <h1>Sit with us a <em>little longer</em></h1>
+      <p class="lede">Long-form conversations on ancestral healing, energy, intuition and the Divine Feminine. Press play here, or join the community on YouTube.</p>
+      <div class="btns"><a class="btn btn-gold" href={`${youtubeChannel}?sub_confirmation=1`} rel="noopener">Subscribe on YouTube</a><a class="btn btn-line" href="/podcast">Listen to the podcast</a></div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom: 72px;" aria-labelledby="feat-title">
+    <article class="video-feature">
+      <button class="yt video-play" type="button" data-video={featured.id} data-title={featured.title} aria-label={`Play ${featured.title}`}>
+        <img src={thumb(featured.id)} alt="" width="1280" height="720" loading="eager" decoding="async" />
+        <span class="yt-play" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"></path></svg></span>
+      </button>
+      <div class="stack" style="gap: 12px;">
+        <p class="eyebrow" style="font-size: 12px;">Newest · {featured.theme} · {featured.length}</p>
+        <h2 id="feat-title" style="font-size: clamp(30px, 3.4vw, 42px);">{featured.title}</h2>
+        <a href={`https://www.youtube.com/watch?v=${featured.id}`} rel="noopener">Watch on YouTube →</a>
+      </div>
+    </article>
+  </section>
+
+  <section class="band" aria-labelledby="more-title">
+    <div class="wrap section">
+      <div class="row-head"><h2 id="more-title">More conversations</h2><a href={youtubeChannel} rel="noopener">All videos on YouTube →</a></div>
+      <div class="video-grid">
+        {rest.map((v) => (
+          <article class="stack" style="gap: 12px;">
+            <button class="yt video-play" type="button" data-video={v.id} data-title={v.title} aria-label={`Play ${v.title}`}>
+              <img src={thumb(v.id)} alt="" width="1280" height="720" loading="lazy" decoding="async" />
+              <span class="yt-play" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"></path></svg></span>
+            </button>
+            <p class="mute" style="font-size: 13px;">{v.theme} · {v.length}</p>
+            <h3 style="font-size: 23px;">{v.title}</h3>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Click-to-play: YouTube only loads (and only sets cookies) once someone presses play.
+    document.querySelectorAll<HTMLButtonElement>('.video-play').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const frame = document.createElement('iframe');
+        frame.src = `https://www.youtube-nocookie.com/embed/${btn.dataset.video}?autoplay=1&rel=0`;
+        frame.title = btn.dataset.title ?? 'YouTube video';
+        frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        frame.allowFullscreen = true;
+        frame.className = 'yt-frame';
+        btn.replaceWith(frame);
+        frame.focus();
+      });
+    });
+  </script>
+</Base>

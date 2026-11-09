@@ -19,16 +19,31 @@ export const site = {
   },
 };
 
-export const nav = [
+type NavLink = { label: string; href: string; external?: boolean; note?: string };
+type NavItem = NavLink | { label: string; children: NavLink[] };
+
+export const nav: NavItem[] = [
   { label: 'About', href: '/about' },
-  { label: 'Podcast', href: '/podcast' },
-  { label: 'Classes & Events', href: '/events' },
-  { label: 'Consultations', href: '/consultations' },
-  { label: 'Books & Courses', href: '/books-and-courses' },
-  { label: 'Meditations', href: '/meditations' },
-  { label: 'Ancestral Library', href: 'https://afroindenginousresearchlibrary.netlify.app/', external: true },
-  { label: 'Writings', href: '/writings' },
+  {
+    label: 'Podcast & Videos',
+    children: [
+      { label: 'Podcast', href: '/podcast', note: 'New episodes every other Friday' },
+      { label: 'Videos', href: '/videos', note: 'Long-form conversations on YouTube' },
+      { label: 'Meditations', href: '/meditations', note: 'Guided practices for your path' },
+    ],
+  },
+  {
+    label: 'Learn',
+    children: [
+      { label: 'Classes & Events', href: '/events', note: 'Live online circles and workshops' },
+      { label: 'Books & Courses', href: '/books-and-courses', note: 'Books, journals and masterclasses' },
+      { label: 'Writings', href: '/writings', note: 'Essays on ancestral healing' },
+      { label: 'Ancestral Library', href: 'https://afroindenginousresearchlibrary.netlify.app/', external: true, note: 'Afro-Indigenous research library' },
+    ],
+  },
 ];
+
+export const navCta = { label: 'Book a Session', href: '/consultations' };
 
 export const social = [
   { label: 'Instagram', href: 'https://www.instagram.com/holisticandspiritualaf' },
@@ -298,3 +313,15 @@ export const about = {
     { title: 'Awakening your gifts', text: 'Your intuition is opening and you want grounded tools — divination, meditation, energy work — to trust what you receive.' },
   ],
 };
+
+// Long-form YouTube videos featured on /videos (newest first). Swap ids to change the line-up.
+export const videos = [
+  { id: 'rovNcaGz4dQ', title: 'Subconscious Programming & How to Break the Cycle', length: '39 min', theme: 'Mindset' },
+  { id: 'R_evJ9FoN7I', title: "Why You Still Feel Your Ex's Energy: Energetic Cords Explained", length: '46 min', theme: 'Energy & relationships' },
+  { id: 'Xlz_-Y44JyE', title: 'The Mother Wound Didn’t Start With Her', length: '41 min', theme: 'Ancestral healing' },
+  { id: 'I_5MU0_NI5w', title: 'You Already Got the Sign… Now What?', length: '36 min', theme: 'Intuition' },
+  { id: 'QcK_3nEdC_I', title: 'Healing Changed My Dating Life. Here’s Why', length: '58 min', theme: 'Divine Feminine' },
+  { id: 'yc9gviUaTSk', title: 'Hoodoo as Resistance: Ancestral Power, Rootwork & Liberation', length: '50 min', theme: 'Rootwork' },
+  { id: 'cbYxv0FTpNc', title: "The Ancestors Built This City: Tampa's Untold Black History", length: '45 min', theme: 'History' },
+];
+export const youtubeChannel = 'https://www.youtube.com/@holisticandspiritualafpodcast';
