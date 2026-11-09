@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import PathFinder from '../components/PathFinder.astro';
+import { site } from '../data/site';
+---
+<Base title="Contact" description="Contact Goddess Zee and Holistic and Spiritual AF about sessions, classes, speaking, collaborations or press.">
+  <section class="wrap" style="padding-top: 80px; padding-bottom: 88px;">
+    <div class="split" style="gap: 64px; align-items: start;">
+      <div class="stack" style="gap: 22px;">
+        <p class="eyebrow">Contact</p>
+        <h1>Drop us <em>a line</em></h1>
+        <p class="lede">Questions about a session, a class or a course? Speaking, collaborations or press? Send a message and you’ll hear back by email.</p>
+        <p class="soft">Prefer email? Write to <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+        <p class="soft">Want to be on the podcast? Use the <a href="/be-a-guest">guest application</a> instead.</p>
+        <PathFinder />
+      </div>
+
+      <form class="guest-form card" name="contact" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact">
+        <p class="visually-hidden"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <h2 style="font-size: 32px;">Send a message</h2>
+        <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field">
+          <label for="c-topic">What’s this about?</label>
+          <select id="c-topic" name="topic" required>
+            <option value="">Choose one</option>
+            <option>Consultations or mentorship</option>
+            <option>Classes and events</option>
+            <option>Books and courses</option>
+            <option>Speaking or collaboration</option>
+            <option>Press or media</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="field"><label for="c-message">Message</label><textarea id="c-message" name="message" rows="6" required></textarea></div>
+        <button class="btn btn-gold" type="submit">Send message</button>
+        <p class="mute">We’ll only use your details to reply. <a href="/privacy">Privacy policy</a></p>
+      </form>
+    </div>
+  </section>
+</Base>

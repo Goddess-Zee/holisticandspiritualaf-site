@@ -148,7 +148,7 @@ button.pill:hover { border-color: var(--gold-light); }
 .guest-form { gap: 18px; }
 .field { display: flex; flex-direction: column; gap: 8px; border: 0; padding: 0; margin: 0; }
 .field label, .field legend { font-size: 15px; font-weight: 500; color: var(--text-strong); padding: 0; }
-.field input:not([type='radio']), .field textarea { width: 100%; min-height: 48px; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--line-3); background: var(--bg); color: var(--text); font: inherit; }
+.field input:not([type='radio']), .field textarea, .field select { width: 100%; min-height: 48px; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--line-3); background: var(--bg); color: var(--text); font: inherit; }
 .field textarea { resize: vertical; }
 .field input:focus, .field textarea:focus { border-color: var(--gold-light); outline: none; box-shadow: 0 0 0 3px rgba(227, 178, 106, 0.25); }
 .choice-row { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 4px; }
