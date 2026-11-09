@@ -1,0 +1,22 @@
+---
+import { about } from '../data/site';
+interface Props { heading?: 'h2' | 'h3' }
+const { heading = 'h2' } = Astro.props;
+const H = heading;
+---
+<div class="stack" style="gap: 32px;">
+  <div class="stack" style="gap: 14px; max-width: 760px;">
+    <p class="eyebrow">Who I work with</p>
+    <H id="who-title" style="font-size: clamp(34px, 4vw, 48px);">This is for the women doing the soul work</H>
+    <p class="soft" style="font-size: 18px;">{about.whoIntro}</p>
+  </div>
+  <ul class="who-grid">
+    {about.who.map((w) => (
+      <li class="who-card">
+        <span class="who-mark" aria-hidden="true"></span>
+        <h3>{w.title}</h3>
+        <p class="soft">{w.text}</p>
+      </li>
+    ))}
+  </ul>
+</div>

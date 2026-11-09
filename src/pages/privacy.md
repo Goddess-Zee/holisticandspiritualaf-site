@@ -3,7 +3,7 @@ layout: ../layouts/Legal.astro
 title: Privacy Policy
 description: How Holistic and Spiritual AF collects, uses, shares and protects your information.
 effective: January 1, 2026
-updated: February 7, 2026
+updated: November 8, 2026
 ---
 
 ## 1. Introduction
@@ -49,19 +49,13 @@ We never sell your personal data.
 
 We honor your digital boundaries. Cookies help us keep things running smoothly and learn what serves our community best. Nothing creepy, nothing sold — just clarity and care.
 
-Our site may use:
-
-- Cookies
-- Web beacons
-- Analytics tools (like Google Analytics)
-
-These help us understand trends and improve navigation. You can manage cookie preferences in your browser settings, but disabling cookies may impact your experience.
+Optional cookies load only after you choose “I’m In” on our cookie banner. You can change your choice anytime with the **Cookie settings** link at the bottom of every page. Details are in our [Cookie Policy](/cookies).
 
 ## 5. Sharing Your Information
 
 We may share data with:
 
-- Service providers (payment processors, email platforms)
+- Service providers who help us run the business, including MailerLite (newsletter), Cal.com (booking), Stripe (payments), Eventbrite (class tickets), Gumroad (courses), Netlify (website hosting and forms) and Podbean (podcast)
 - Legal authorities when required
 - Affiliates for analytics or performance
 

@@ -23,6 +23,7 @@ import SocialIcons from './SocialIcons.astro';
   // (form inactive or blocked by the browser), show an email fallback instead.
   document.querySelectorAll<HTMLButtonElement>('[data-ml-form]').forEach((btn) => {
     btn.addEventListener('click', () => {
+      (window as any).hsafLoadMailerLite?.();
       const ml = (window as any).ml;
       const before = document.querySelectorAll('iframe, [class*="ml-"], [id^="mlb2"]').length;
       if (typeof ml === 'function') ml('show', btn.dataset.mlForm, true);
@@ -30,7 +31,7 @@ import SocialIcons from './SocialIcons.astro';
         const after = document.querySelectorAll('iframe, [class*="ml-"], [id^="mlb2"]').length;
         const fallback = document.getElementById('join-fallback');
         if (fallback && after <= before) fallback.hidden = false;
-      }, 2500);
+      }, 4000);
     });
   });
 </script>

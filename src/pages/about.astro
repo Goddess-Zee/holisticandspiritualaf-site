@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import WhoIWorkWith from '../components/WhoIWorkWith.astro';
+import PathFinder from '../components/PathFinder.astro';
+import { site, about, press } from '../data/site';
+
+const schema = [{
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About Goddess Zee',
+  url: `${site.url}/about`,
+  mainEntity: { '@id': `${site.url}/#zee` },
+}];
+---
+<Base title="About Goddess Zee" description="Goddess Zee (Zipporah Banyay) is a reiki master, intuitive energy healer, medium and author with over 20 years of practice, serving Afro-Indigenous, Afro-Caribbean and Afro-Latina women." schema={schema}>
+  <section class="wrap" style="padding-top: 80px; padding-bottom: 80px;">
+    <div class="split" style="gap: 64px;">
+      <div class="stack" style="gap: 22px;">
+        <p class="eyebrow">About Goddess Zee</p>
+        <h1>Healer, medium, author and <em>keeper of ancestral wisdom</em></h1>
+        {about.bio.map((p, i) => <p class={i === 0 ? 'lede' : 'soft'}>{p}</p>)}
+        <div class="btns">
+          <a class="btn btn-gold" href="/consultations">Work with me</a>
+          <a class="btn btn-line" href="/podcast">Listen to the podcast</a>
+        </div>
+      </div>
+      <Img src="/images/home/goddess-zee-portrait.webp" alt="Goddess Zee holding her book The 5 Stages of Shadow Work" label="[Portrait of Goddess Zee]" loading="eager"
+        style="border-radius: 240px 240px 16px 16px; height: 620px; width: 100%; object-fit: cover; object-position: 50% 25%;" />
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="who-title">
+    <div class="wrap section"><WhoIWorkWith /></div>
+  </section>
+
+  <section class="wrap section split" style="gap: 64px;" aria-labelledby="hsaf-title">
+    <div class="stack" style="gap: 18px;">
+      <p class="eyebrow">About Holistic and Spiritual AF</p>
+      <h2 id="hsaf-title">A sanctuary for the sacred journey home to self</h2>
+      {about.mission.map((p) => <p class="soft">{p}</p>)}
+    </div>
+    <div class="manifesto">
+      {about.manifesto.map((line) => <p>{line}</p>)}
+      <p class="manifesto-close">This is the work of liberation — personal and collective.</p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="press-title">
+    <div class="wrap section stack" style="gap: 24px; text-align: center; align-items: center;">
+      <p class="eyebrow" id="press-title">Featured in</p>
+      <div class="pills" style="justify-content: center;">{press.map((p) => <a class="pill" href={p.href}>{p.outlet}</a>)}</div>
+    </div>
+  </section>
+
+  <section class="wrap section"><PathFinder /></section>
+</Base>

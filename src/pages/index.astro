@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
-import { site, podcast, sessions, books, courses, events, libraryTags, press } from '../data/site';
+import { site, podcast, sessions, books, courses, events, libraryTags, press, about } from '../data/site';
 import { getWritings, coverFor } from '../lib/writings';
 
 const published = await getWritings();
@@ -9,6 +9,7 @@ const featuredWritings = [...published.filter((w) => w.data.featured), ...publis
   .slice(0, 3)
   .map((w) => ({ title: w.data.title, theme: w.data.theme, href: `/writings/${w.id}`, image: coverFor(w) }));
 import PathFinder from '../components/PathFinder.astro';
+import WhoIWorkWith from '../components/WhoIWorkWith.astro';
 import { getEpisodes, getShowArtwork, episodeCount, formatDate, shortTitle } from '../lib/podcast';
 
 const episodes = await getEpisodes();
@@ -55,6 +56,24 @@ const schema = [
       <Img src="/images/home/goddess-zee-closeup.webp" alt="Goddess Zee" label="[Portrait of Goddess Zee]" loading="eager"
         style="border-radius: 240px 240px 16px 16px; height: 560px; width: 100%; object-fit: cover; object-position: 50% 20%;" />
     </div>
+  </section>
+
+  <section class="band" aria-labelledby="about-title">
+    <div class="wrap section split" style="gap: 64px;">
+      <Img src="/images/home/goddess-zee-portrait.webp" alt="Goddess Zee holding her book The 5 Stages of Shadow Work"
+        style="border-radius: 16px; height: 520px; width: 100%; object-fit: cover; object-position: 50% 25%;" />
+      <div class="stack" style="gap: 18px;">
+        <p class="eyebrow">About Goddess Zee</p>
+        <h2 id="about-title">20+ years of ancestral healing and spiritual practice</h2>
+        <p class="soft" style="font-size: 18px;">{about.bio[0]}</p>
+        <p class="soft">{about.bio[3]}</p>
+        <div><a class="btn btn-line" href="/about">Read my story</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="who-title">
+    <WhoIWorkWith />
   </section>
 
   <section class="band" aria-labelledby="pod-title">

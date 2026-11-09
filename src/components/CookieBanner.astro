@@ -1,0 +1,40 @@
+---
+// "Conscious Cookies" consent banner.
+// Optional tools (MailerLite's tracking script) load only after "I'm In".
+// Clicking the newsletter button still opens the sign-up form, because the visitor asked for it.
+---
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-text" hidden>
+  <h2 id="cookie-title">Conscious Cookies</h2>
+  <p id="cookie-text">We honor your digital boundaries. Cookies help us keep things running smoothly and learn what serves our community best. Nothing creepy, nothing sold — just clarity and care. <a href="/cookies">Cookie policy</a></p>
+  <div class="cookie-actions">
+    <button type="button" class="cookie-accept" data-consent="yes">I’m In</button>
+    <button type="button" class="cookie-decline" data-consent="no">No Thank You</button>
+  </div>
+</div>
+
+<script>
+  const KEY = 'hsaf-cookie-consent';
+  const banner = document.getElementById('cookie-banner')!;
+  const read = () => { try { return localStorage.getItem(KEY); } catch { return null; } };
+  const save = (v: string) => { try { localStorage.setItem(KEY, v); } catch {} };
+  const w = window as any;
+
+  if (read() === 'yes') w.hsafLoadMailerLite?.();
+  if (!read()) banner.hidden = false;
+
+  banner.querySelectorAll<HTMLButtonElement>('[data-consent]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const v = b.dataset.consent ?? 'no';
+      save(v);
+      banner.hidden = true;
+      if (v === 'yes') w.hsafLoadMailerLite?.();
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-cookie-settings]').forEach((b) => {
+    b.addEventListener('click', () => {
+      banner.hidden = false;
+      banner.querySelector<HTMLButtonElement>('.cookie-accept')?.focus();
+    });
+  });
+</script>

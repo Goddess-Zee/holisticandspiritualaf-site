@@ -20,6 +20,7 @@ export const site = {
 };
 
 export const nav = [
+  { label: 'About', href: '/about' },
   { label: 'Podcast', href: '/podcast' },
   { label: 'Classes & Events', href: '/events' },
   { label: 'Consultations', href: '/consultations' },
@@ -270,4 +271,30 @@ export const newsletter = {
   formId: 'bf10ui',
   offer: 'Join the Circle and get 10% off your first course, consultation or masterclass',
   note: 'Monthly energy updates, early access to classes and new episodes in your inbox. Your code arrives in your welcome email.',
+};
+
+// About page + homepage "Who I work with" (in Goddess Zee's own words from the old site)
+export const about = {
+  bio: [
+    'Zipporah Banyay — Goddess Zee — is a reiki master, meditation facilitator and intuitive energy healer, medium and channeler of the ancestors and divine source energy with over 20 years of dedicated practice.',
+    'Her journey into the spiritual realm began at a young age, driven by a strong connection to her ancestors and their wisdom. She went on to heal generational trauma in her own life and deepen her spiritual development.',
+    'Throughout her journey, Goddess Zee has guided countless individuals toward deeper self-awareness and empowerment — transforming personal traumas into sources of strength and healing their ancestral lineage.',
+    'She is the host of the Holistic and Spiritual AF Podcast, author of The 5 Stages of Shadow Work and Ancestral Altar Guide, and offers spiritual consultations, guided meditations and classes for Afro-Indigenous, Caribbean and Afro-Latina women reclaiming and reconnecting to their ancestral wisdom.',
+  ],
+  mission: [
+    'Holistic and Spiritual AF™ is a sacred movement, a multidimensional platform, and a sanctuary for Afro-Indigenous, Afro-Caribbean and Afro-Latina women who are reclaiming their Divine Feminine power, healing generational trauma, and walking in ancestral alignment.',
+    'Founded by Goddess Zee, an Afro-Indigenous and Caribbean energy healer, author, podcast host, meditation facilitator and spiritual educator, this space exists to nurture the full spectrum of our healing — mental, emotional, spiritual and ancestral.',
+  ],
+  manifesto: [
+    'We are not just healing, we are remembering.',
+    'We are not just learning, we are reactivating ancient knowledge that lives in our bones.',
+    'We reclaim softness as power, intuition as intelligence, and rest as resistance.',
+  ],
+  whoIntro: 'I work with Afro-Indigenous, Afro-Caribbean and Afro-Latina women — Black women and women of African descent across the Caribbean, the Americas and the ancestral homelands — who are ready to do the soul work not just for themselves, but for their bloodline.',
+  who: [
+    { title: 'Healing the bloodline', text: 'You’re ready to face generational trauma and break the patterns you inherited, so they stop with you.' },
+    { title: 'Reclaiming the Divine Feminine', text: 'You want to embody your power with softness, intuition and rest — not hustle and self-abandonment.' },
+    { title: 'Reconnecting with the ancestors', text: 'You feel the call of your lineage and want guidance building a respectful, living relationship with those who came before you.' },
+    { title: 'Awakening your gifts', text: 'Your intuition is opening and you want grounded tools — divination, meditation, energy work — to trust what you receive.' },
+  ],
 };

@@ -1,9 +1,9 @@
 ---
 layout: ../layouts/Legal.astro
-title: Terms of Use
+title: Terms & Conditions
 description: Terms of use for holisticandspiritualaf.com, including the educational and spiritual services disclaimer.
 effective: January 6, 2026
-updated: February 7, 2026
+updated: November 8, 2026
 ---
 
 ## 1. Acceptance

@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { site, nav, social, newsletter as mailerlite } from '../data/site';
 import Newsletter from '../components/Newsletter.astro';
 import SocialIcons from '../components/SocialIcons.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 
 interface Props {
   title?: string;
@@ -71,9 +72,8 @@ const baseSchema = [
 
   {[...baseSchema, ...schema].map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
 
-  <!-- MailerLite Universal -->
-  <script is:inline set:html={`(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account', '${mailerlite.account}');`} />
-  <!-- End MailerLite Universal -->
+  <!-- MailerLite: loads only after cookie consent, or when someone clicks a sign-up button -->
+  <script is:inline set:html={`window.hsafLoadMailerLite=function(){if(window.hsafML)return;window.hsafML=1;(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account', '${mailerlite.account}');};`} />
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -108,9 +108,10 @@ const baseSchema = [
     <div class="wrap">
       <div>© {new Date().getFullYear()} {site.name}™ · {site.founder}</div>
       <div class="footer-social"><span>Follow along</span><SocialIcons size={22} /></div>
-      <nav aria-label="Legal"><a href="/be-a-guest">Be a Guest</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+      <nav aria-label="Legal" class="footer-legal"><a href="/about">About</a><a href="/be-a-guest">Be a Guest</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms &amp; Conditions</a><a href="/cookies">Cookie Policy</a><a href="/accessibility">Accessibility</a><button type="button" data-cookie-settings>Cookie settings</button></nav>
     </div>
   </footer>
+  <CookieBanner />
 
   <script>
     const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
