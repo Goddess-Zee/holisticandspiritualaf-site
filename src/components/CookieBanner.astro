@@ -1,7 +1,7 @@
 ---
 // "Conscious Cookies" consent banner.
-// Optional tools (MailerLite's tracking script) load only after "I'm In".
-// Clicking the newsletter button still opens the sign-up form, because the visitor asked for it.
+// Analytics (added later) load only after "I'm In". Every choice fires an `hsaf:consent` event,
+// and `window.hsafConsent()` returns the saved choice.
 ---
 <div class="cookie-banner" id="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-text" hidden>
   <h2 id="cookie-title">Conscious Cookies</h2>
@@ -20,7 +20,7 @@
   const save = (v: string) => { try { localStorage.setItem(KEY, v); } catch {} };
   const w = window as any;
 
-  if (read() === 'yes') w.hsafLoadMailerLite?.();
+  w.hsafConsent = read;
   if (!read()) banner.hidden = false;
 
   banner.querySelectorAll<HTMLButtonElement>('[data-consent]').forEach((b) => {
@@ -28,7 +28,7 @@
       const v = b.dataset.consent ?? 'no';
       save(v);
       banner.hidden = true;
-      if (v === 'yes') w.hsafLoadMailerLite?.();
+      document.dispatchEvent(new CustomEvent('hsaf:consent', { detail: v }));
     });
   });
 

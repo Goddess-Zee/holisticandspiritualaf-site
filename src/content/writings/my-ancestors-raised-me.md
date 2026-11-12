@@ -3,8 +3,8 @@ title: "My Ancestors Raised Me"
 subtitle: "Part 1"
 date: 2024-03-08
 theme: "Ancestral Lineage"
-featured: true
-draft: false
+featured: false
+draft: true
 bookCandidate: true
 source: "substack:142379576.my-ancestors-raised-me"
 ---

@@ -7,3 +7,6 @@
 /terms-of-use           /terms           301
 /blog                   /writings        301
 /blog/*                 /writings        301
+
+# Essay held back for the memoir
+/writings/my-ancestors-raised-me  /writings  302

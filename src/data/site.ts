@@ -290,6 +290,8 @@ export const libraryTags = [
 export const newsletter = {
   account: '1250967',
   formId: 'bf10ui',
+  // Public sign-up address for the form (no API key needed; double opt-in is on in MailerLite)
+  subscribeUrl: 'https://assets.mailerlite.com/jsonp/1250967/forms/202236760251434471/subscribe',
   offer: 'Join the Circle and get 10% off your first course, consultation or masterclass',
   note: 'Monthly energy updates, early access to classes and new episodes in your inbox. Your code arrives in your welcome email.',
 };

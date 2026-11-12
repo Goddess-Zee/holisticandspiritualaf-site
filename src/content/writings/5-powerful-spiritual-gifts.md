@@ -1,10 +1,10 @@
 ---
-title: "5 Powerful Spiritual Gifts and How to Activate Them"
+title: "4 Powerful Spiritual Gifts and How to Activate Them"
 subtitle: "Unleash Your Gifts"
 date: 2024-10-23
 theme: "Spiritual Practice"
-featured: false
-draft: true
+featured: true
+draft: false
 bookCandidate: true
 source: "substack:150589537.5-powerful-spiritual-gifts-and-how"
 image: "https://substack-post-media.s3.amazonaws.com/public/images/e4f899bf-3e78-4b04-80f1-f964f8ef14e3_1024x1024.webp"
@@ -101,32 +101,6 @@ Goddess Zee- Zipporah Banyay
     * * *
     
 
-**Ready to activate your gifts further?** 
+**Ready to activate your gifts further?**
 
-Join the Holistic and Spiritual AF Podcast to dive deeper into healing, spiritual growth, and ancestral wisdom. **Click the image below.**
-
-![](https://substack-post-media.s3.amazonaws.com/public/images/36d7a88d-70bd-4cfe-955c-645fa16d3825_3000x3000.png)
-
-* * *
-
-**Recent Podcast Episodes:**
-
-The first podcast is me being a guest on the Do Tha Knowledge Radio channel. Be sure to subscribe.
-
-[Watch on YouTube](https://www.youtube.com/watch?v=IJ2e8YLia5c)
-
-In this podcast episode, I’m interviewing the lovely SpiritualGodFairy on the Holistic and Spiritual AF Podcast. Don’t forget to SUBSCRIBE
-
-[Watch on YouTube](https://www.youtube.com/watch?v=jiVZHYZ5GWQ)
-
-* * *
-
-**Upcoming Classes:**
-
-**Back to Balance: A Journey Through the Chakras**
-
-*Click the image for more information*
-
-![](https://substack-post-media.s3.amazonaws.com/public/images/52cb0522-f4ef-4ec8-b6ae-f45b9b2db014_1080x1080.png)
-
-* * *
+Join a [live class](/events) to practice with Goddess Zee in community, or [listen to the Holistic and Spiritual AF Podcast](/podcast) for more on healing, spiritual growth and ancestral wisdom.
