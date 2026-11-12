@@ -2,8 +2,9 @@
 // "Join the Circle" pop-up: the 10% welcome offer, styled to match the site.
 // Sign-ups go straight to the MailerLite form (double opt-in), so no MailerLite
 // script or cookie is ever loaded on the site.
-// Opens on its own once per visit until someone joins (after 12 seconds or half a page
-// of scrolling, and only after the cookie choice), or right away from any "Claim 10% Off" button.
+// Opens on its own on the home page, once per visit until someone joins (after 12 seconds or
+// half a page of scrolling, and only after the cookie choice). Any "Claim 10% Off" button
+// opens it right away on any page.
 import { newsletter } from '../data/site';
 ---
 <dialog class="circle-pop" id="circle-pop" aria-labelledby="circle-title" data-subscribe={newsletter.subscribeUrl}>
@@ -55,8 +56,9 @@ import { newsletter } from '../data/site';
   dlg.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', close));
   dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); }); // click outside the card
 
-  // Automatic opening: once per visit until they join, never on the thank-you page
-  if (!get(JOINED) && !seenThisVisit() && !location.pathname.startsWith('/thanks')) {
+  // Automatic opening: home page only, once per visit, until they join
+  const isHome = location.pathname === '/' || location.pathname === '/index.html';
+  if (isHome && !get(JOINED) && !seenThisVisit()) {
     const arm = () => {
       let done = false;
       const fire = () => { if (done) return; done = true; window.removeEventListener('scroll', onScroll); open(); };
