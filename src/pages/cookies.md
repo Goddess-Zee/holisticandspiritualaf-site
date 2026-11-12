@@ -17,7 +17,7 @@ Cookies are small files a website stores in your browser. Some are needed for a 
 | Type | Who sets it | Why | When |
 | --- | --- | --- | --- |
 | Your cookie choice | Holistic and Spiritual AF | Remembers whether you chose “I’m In,” “Necessary Only” or “No Thank You” so we don’t ask again | Always (stored in your browser, not a cookie we can read) |
-| Welcome offer pop-up | Holistic and Spiritual AF | Remembers that you’ve seen or joined the 10% offer so it doesn’t keep appearing | Always (stored in your browser) |
+| Welcome offer pop-up | Holistic and Spiritual AF | Remembers that you’ve seen the 10% offer this visit, or joined, so it doesn’t keep appearing | Always (stored in your browser) |
 | Email sign-up | MailerLite | Receives your name and email so we can send your welcome email and newsletter | Only when you submit the sign-up form |
 | Site analytics | Google Analytics | Shows us which pages and offerings people find helpful, in summary form | Only after you choose “I’m In” |
 | Booking and payment | Cal.com and Stripe | Schedules and processes consultations | Only on their own pages, after you click a booking button |

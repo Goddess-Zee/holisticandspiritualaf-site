@@ -2,8 +2,8 @@
 // "Join the Circle" pop-up: the 10% welcome offer, styled to match the site.
 // Sign-ups go straight to the MailerLite form (double opt-in), so no MailerLite
 // script or cookie is ever loaded on the site.
-// Opens on its own once per 30 days (after 12 seconds or half a page of scrolling,
-// and only after the cookie choice), or right away from any "Claim 10% Off" button.
+// Opens on its own once per visit until someone joins (after 12 seconds or half a page
+// of scrolling, and only after the cookie choice), or right away from any "Claim 10% Off" button.
 import { newsletter } from '../data/site';
 ---
 <dialog class="circle-pop" id="circle-pop" aria-labelledby="circle-title" data-subscribe={newsletter.subscribeUrl}>
@@ -40,11 +40,14 @@ import { newsletter } from '../data/site';
   const form = dlg.querySelector('form') as HTMLFormElement;
   const err = dlg.querySelector('.circle-error') as HTMLElement;
   const btn = form.querySelector('button[type=submit]') as HTMLButtonElement;
-  const SEEN = 'hsaf-circle-seen', JOINED = 'hsaf-circle-joined', DAYS = 30;
+  const SEEN = 'hsaf-circle-seen', JOINED = 'hsaf-circle-joined';
   const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
+  // "Seen" lasts for this visit only (the browser tab session), so it returns on the next visit
+  const seenThisVisit = () => { try { return sessionStorage.getItem(SEEN); } catch { return null; } };
+  const markSeen = () => { try { sessionStorage.setItem(SEEN, '1'); } catch {} };
   const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch {} };
 
-  const open = () => { if (!dlg.open) { dlg.showModal(); set(SEEN, String(Date.now())); } };
+  const open = () => { if (!dlg.open) { dlg.showModal(); markSeen(); } };
   const close = () => dlg.close();
 
   // Any "Claim 10% Off" button opens it straight away
@@ -52,9 +55,8 @@ import { newsletter } from '../data/site';
   dlg.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', close));
   dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); }); // click outside the card
 
-  // Automatic opening: once per 30 days, never after joining, never on the thank-you page
-  const recentlySeen = Number(get(SEEN) ?? 0) > Date.now() - DAYS * 864e5;
-  if (!get(JOINED) && !recentlySeen && !location.pathname.startsWith('/thanks')) {
+  // Automatic opening: once per visit until they join, never on the thank-you page
+  if (!get(JOINED) && !seenThisVisit() && !location.pathname.startsWith('/thanks')) {
     const arm = () => {
       let done = false;
       const fire = () => { if (done) return; done = true; window.removeEventListener('scroll', onScroll); open(); };
