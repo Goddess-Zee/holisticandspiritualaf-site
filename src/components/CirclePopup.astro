@@ -1,13 +1,12 @@
 ---
 // "Join the Circle" pop-up: the 10% welcome offer, styled to match the site.
-// Sign-ups go straight to the MailerLite form (double opt-in), so no MailerLite
-// script or cookie is ever loaded on the site.
+// Sign-ups go to our own Netlify function (netlify/functions/join-circle.mts), which adds
+// them to MailerLite with the private API key. No MailerLite script or cookie loads on the site.
 // Opens on its own on the home page, once per visit until someone joins (after 12 seconds or
 // half a page of scrolling, and only after the cookie choice). Any "Claim 10% Off" button
 // opens it right away on any page.
-import { newsletter } from '../data/site';
 ---
-<dialog class="circle-pop" id="circle-pop" aria-labelledby="circle-title" data-subscribe={newsletter.subscribeUrl}>
+<dialog class="circle-pop" id="circle-pop" aria-labelledby="circle-title">
   <div class="circle-card">
     <button type="button" class="circle-close" data-close aria-label="Close">
       <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -29,9 +28,9 @@ import { newsletter } from '../data/site';
     </div>
 
     <div class="circle-body" data-step="done" hidden tabindex="-1">
-      <p class="eyebrow">Almost there</p>
-      <h2>Check your <em>inbox</em></h2>
-      <p class="soft">Tap the confirmation link we just sent. Your 10% code arrives in your welcome email right after.</p>
+      <p class="eyebrow">You’re in</p>
+      <h2>Welcome to the <em>Circle</em></h2>
+      <p class="soft">Your welcome email with your 10% code is on its way. If you don’t see it in a few minutes, check your promotions or spam folder.</p>
       <button type="button" class="btn btn-line" data-close>Back to the site</button>
     </div>
   </div>
@@ -94,8 +93,11 @@ import { newsletter } from '../data/site';
     btn.disabled = true;
     btn.textContent = 'Sending…';
     try {
-      const body = new URLSearchParams({ 'fields[email]': email, 'fields[name]': name, 'ml-submit': '1', anticsrf: 'true' });
-      const res = await fetch(dlg.dataset.subscribe!, { method: 'POST', body });
+      const res = await fetch('/api/join-circle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name, website: trap }),
+      });
       const data = await res.json();
       if (!data.success) { console.warn('[circle] MailerLite said:', data.message ?? data.errors); throw new Error('rejected'); }
       set(JOINED, '1');
