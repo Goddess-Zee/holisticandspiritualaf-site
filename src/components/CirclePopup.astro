@@ -20,6 +20,7 @@ import { newsletter } from '../data/site';
       <p class="soft">Plus monthly energy updates, early access to classes and new episodes in your inbox.</p>
       <form class="circle-form" novalidate>
         <div class="field"><label for="circle-name">First name</label><input id="circle-name" name="name" autocomplete="given-name"></div>
+        <p class="visually-hidden" aria-hidden="true"><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label></p>
         <div class="field"><label for="circle-email">Email</label><input id="circle-email" name="email" type="email" autocomplete="email" required></div>
         <p class="circle-error" role="alert" hidden></p>
         <button class="btn btn-gold" type="submit">Send My 10%</button>
@@ -37,16 +38,17 @@ import { newsletter } from '../data/site';
 </dialog>
 
 <script>
+  import { remember, recall, rememberForVisit, recallForVisit } from '../lib/store';
   const dlg = document.getElementById('circle-pop') as HTMLDialogElement;
   const form = dlg.querySelector('form') as HTMLFormElement;
   const err = dlg.querySelector('.circle-error') as HTMLElement;
   const btn = form.querySelector('button[type=submit]') as HTMLButtonElement;
   const SEEN = 'hsaf-circle-seen', JOINED = 'hsaf-circle-joined';
-  const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
-  // "Seen" lasts for this visit only (the browser tab session), so it returns on the next visit
-  const seenThisVisit = () => { try { return sessionStorage.getItem(SEEN); } catch { return null; } };
-  const markSeen = () => { try { sessionStorage.setItem(SEEN, '1'); } catch {} };
-  const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch {} };
+  const get = (k: string) => recall(k);
+  const set = (k: string, v: string) => remember(k, v);
+  // "Seen" lasts for this visit only, so the pop-up returns on the next visit
+  const seenThisVisit = () => recallForVisit(SEEN);
+  const markSeen = () => rememberForVisit(SEEN, '1');
 
   const open = () => { if (!dlg.open) { dlg.showModal(); markSeen(); } };
   const close = () => dlg.close();
@@ -75,6 +77,15 @@ import { newsletter } from '../data/site';
     err.hidden = true;
     const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
     const name = (form.elements.namedItem('name') as HTMLInputElement).value.trim();
+    // Spam trap: real people never see or fill the hidden "website" field
+    const trap = (form.elements.namedItem('website') as HTMLInputElement).value;
+    const showDone = () => {
+      dlg.querySelector<HTMLElement>('[data-step=form]')!.hidden = true;
+      const done = dlg.querySelector<HTMLElement>('[data-step=done]')!;
+      done.hidden = false;
+      done.focus();
+    };
+    if (trap) { showDone(); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       err.textContent = 'Please enter a valid email address.';
       err.hidden = false;
@@ -86,12 +97,9 @@ import { newsletter } from '../data/site';
       const body = new URLSearchParams({ 'fields[email]': email, 'fields[name]': name, 'ml-submit': '1', anticsrf: 'true' });
       const res = await fetch(dlg.dataset.subscribe!, { method: 'POST', body });
       const data = await res.json();
-      if (!data.success) throw new Error('rejected');
+      if (!data.success) { console.warn('[circle] MailerLite said:', data.message ?? data.errors); throw new Error('rejected'); }
       set(JOINED, '1');
-      dlg.querySelector<HTMLElement>('[data-step=form]')!.hidden = true;
-      const done = dlg.querySelector<HTMLElement>('[data-step=done]')!;
-      done.hidden = false;
-      done.focus();
+      showDone();
     } catch {
       err.innerHTML = 'Something went wrong. Please try again, or <a href="/contact?topic=newsletter">send us a message</a> and we’ll add you.';
       err.hidden = false;

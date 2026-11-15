@@ -14,10 +14,11 @@
 </div>
 
 <script>
+  import { remember, recall } from '../lib/store';
   const KEY = 'hsaf-cookie-consent';
   const banner = document.getElementById('cookie-banner')!;
-  const read = () => { try { return localStorage.getItem(KEY); } catch { return null; } };
-  const save = (v: string) => { try { localStorage.setItem(KEY, v); } catch {} };
+  const read = () => recall(KEY);
+  const save = (v: string) => remember(KEY, v);
   const w = window as any;
 
   w.hsafConsent = read;
