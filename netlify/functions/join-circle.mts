@@ -15,8 +15,14 @@ const reply = (status: number, body: Record<string, unknown>) =>
 export default async (req: Request) => {
   if (req.method !== 'POST') return reply(405, { success: false, message: 'Method not allowed' });
 
-  const key = Netlify.env.get('MAILERLITE_API_KEY');
-  const group = Netlify.env.get('MAILERLITE_GROUP_ID');
+  // Clean up copy-paste extras (spaces, line breaks, straight or curly quotes) around the values
+  const clean = (v?: string) => (v ?? '').replace(/[\s'"\u2018\u2019\u201C\u201D]/g, '');
+  const key = clean(Netlify.env.get('MAILERLITE_API_KEY'));
+  const group = clean(Netlify.env.get('MAILERLITE_GROUP_ID'));
+  if (/[^A-Za-z0-9._-]/.test(key)) {
+    console.error('[join-circle] MAILERLITE_API_KEY has unexpected characters; please re-paste it');
+    return reply(500, { success: false, message: 'Sign-up key needs to be re-entered' });
+  }
   if (!key) {
     console.error('[join-circle] MAILERLITE_API_KEY is not set');
     return reply(500, { success: false, message: 'Sign-up is not configured yet' });
