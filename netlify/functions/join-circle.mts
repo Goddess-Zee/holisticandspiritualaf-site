@@ -5,6 +5,8 @@
 //   MAILERLITE_API_KEY  — MailerLite → Integrations → API → Generate new token
 //   MAILERLITE_GROUP_ID — the group new subscribers join (the welcome automation
 //                         should start with "When subscriber joins a group" → that group)
+//   MAILERLITE_GROUP_NAME — optional; used to find the group if the ID doesn't work
+//                         (default "Join the Circle")
 
 const API = 'https://connect.mailerlite.com/api';
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,20 +40,38 @@ export default async (req: Request) => {
   const name = String(data.name ?? '').trim().slice(0, 80);
   if (!EMAIL.test(email) || email.length > 254) return reply(400, { success: false, message: 'Please enter a valid email address.' });
 
+  const headers = { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Accept: 'application/json' };
+
+  // 1. Create (or update) the subscriber
   const res = await fetch(`${API}/subscribers`, {
     method: 'POST',
-    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({
-      email,
-      ...(name ? { fields: { name } } : {}),
-      ...(group ? { groups: [group] } : {}),
-    }),
+    headers,
+    body: JSON.stringify({ email, ...(name ? { fields: { name } } : {}) }),
   });
+  if (!res.ok) {
+    console.error('[join-circle] MailerLite answered', res.status, (await res.text()).slice(0, 300));
+    return reply(502, { success: false, message: 'MailerLite did not accept the sign-up' });
+  }
+  const subscriber = (await res.json())?.data;
 
-  if (res.ok) return reply(200, { success: true });
-  const detail = await res.text();
-  console.error('[join-circle] MailerLite answered', res.status, detail.slice(0, 300));
-  return reply(502, { success: false, message: 'MailerLite did not accept the sign-up' });
+  // 2. Put them in the Circle group (this is what starts the welcome automation).
+  //    Uses MAILERLITE_GROUP_ID if it works; otherwise looks the group up by name.
+  const groupName = Netlify.env.get('MAILERLITE_GROUP_NAME') || 'Join the Circle';
+  const addTo = async (id: string) =>
+    (await fetch(`${API}/subscribers/${subscriber.id}/groups/${id}`, { method: 'POST', headers })).ok;
+
+  let grouped = false;
+  let how = 'none';
+  if (group && /^\d+$/.test(group)) { grouped = await addTo(group); how = grouped ? 'id' : 'id-failed'; }
+  if (!grouped) {
+    const list = await fetch(`${API}/groups?filter[name]=${encodeURIComponent(groupName)}&limit=10`, { headers });
+    const match = list.ok ? (await list.json())?.data?.find((g: { name: string }) => g.name.trim().toLowerCase() === groupName.toLowerCase()) : null;
+    if (match) { grouped = await addTo(String(match.id)); how = grouped ? 'name' : 'name-failed'; }
+    else how += '+no-group-named-' + groupName;
+  }
+  if (!grouped) console.error('[join-circle] Could not add to group:', how);
+
+  return reply(200, { success: true, grouped, how });
 };
 
 export const config = { path: '/api/join-circle' };
