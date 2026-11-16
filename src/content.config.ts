@@ -8,6 +8,7 @@ const writings = defineCollection({
   schema: z.object({
     title: z.string(),
     subtitle: z.string().optional(),
+    description: z.string().optional(),
     date: z.coerce.date(),
     theme: z.enum(['Ancestral Lineage', 'Shadow Work & Healing', 'The Sovereign Feminine', 'Spiritual Practice']),
     image: z.string().optional(),

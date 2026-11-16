@@ -13,7 +13,7 @@ interface Props { entry: Writing; all: Writing[] }
 const { entry, all } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
-const description = d.subtitle ?? excerpt(entry.body, 155);
+const description = d.description ?? (d.subtitle && d.subtitle.length > 70 ? d.subtitle : excerpt(entry.body, 155));
 const more = all.filter((w) => w.id !== entry.id).sort((a, b) => Number(b.data.theme === d.theme) - Number(a.data.theme === d.theme)).slice(0, 3);
 
 const offer =
@@ -31,13 +31,15 @@ const schema = [{
   headline: d.title,
   description,
   datePublished: d.date.toISOString(),
+  inLanguage: 'en-US',
+  articleSection: d.theme,
   author: { '@id': `${site.url}/#zee` },
   publisher: { '@id': `${site.url}/#org` },
   mainEntityOfPage: `${site.url}/writings/${entry.id}`,
   ...(d.image ? { image: d.image } : {}),
 }];
 ---
-<Base title={d.title} description={description} image={d.image} schema={schema}>
+<Base title={d.title} description={description} image={d.image} imageAlt={d.title} type="article" published={d.date} crumbs={[{ name: 'Writings', href: '/writings' }]} schema={schema}>
   <article>
     <header class="wrap" style="padding-top: 72px; padding-bottom: 40px;">
       <div class="stack" style="gap: 18px; max-width: 820px; margin: 0 auto; text-align: center; align-items: center;">

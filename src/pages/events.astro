@@ -19,7 +19,9 @@ const schema = upcoming.map((e) => ({
   eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
   eventStatus: 'https://schema.org/EventScheduled',
   location: { '@type': 'VirtualLocation', url: e.href },
-  organizer: { '@id': `${site.url}/#zee` },
+  organizer: { '@type': 'Person', name: 'Goddess Zee (Zipporah Banyay)', url: `${site.url}/about` },
+  performer: { '@type': 'Person', name: 'Goddess Zee (Zipporah Banyay)', url: `${site.url}/about` },
+  ...(e.image ? { image: new URL(e.image, site.url).href } : {}),
   offers: { '@type': 'Offer', url: e.href, availability: 'https://schema.org/InStock', ...('price' in e && e.price ? { price: String(e.price).replace(/[^0-9.]/g, ''), priceCurrency: 'USD' } : {}) },
 }));
 ---

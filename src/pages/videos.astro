@@ -9,13 +9,16 @@ const schema = videos.map((v) => ({
   '@context': 'https://schema.org',
   '@type': 'VideoObject',
   name: v.title,
+  description: v.description,
+  uploadDate: v.uploaded,
+  duration: `PT${Math.floor(v.seconds / 60)}M${v.seconds % 60}S`,
   thumbnailUrl: `https://i.ytimg.com/vi/${v.id}/maxresdefault.jpg`,
   contentUrl: `https://www.youtube.com/watch?v=${v.id}`,
   embedUrl: `https://www.youtube-nocookie.com/embed/${v.id}`,
-  author: { '@id': `${site.url}/#zee` },
+  author: { '@type': 'Person', name: 'Goddess Zee (Zipporah Banyay)', url: `${site.url}/about` },
 }));
 ---
-<Base title="Videos" description="Long-form conversations with Goddess Zee on ancestral healing, energy, intuition, rootwork and the Divine Feminine, from the Holistic and Spiritual AF YouTube channel." schema={schema}>
+<Base title="Videos" description="Long-form conversations with Goddess Zee on ancestral healing, energy, intuition, rootwork and the Divine Feminine, from the Holistic and Spiritual AF podcast." schema={schema}>
   <section class="wrap" style="padding-top: 80px; padding-bottom: 48px;">
     <div class="stack" style="gap: 18px; max-width: 760px;">
       <p class="eyebrow">Podcast &amp; Videos</p>

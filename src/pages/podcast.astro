@@ -19,12 +19,14 @@ const schema = [
     description: podcast.about,
     url: `${site.url}/podcast`,
     webFeed: podcast.feedUrl,
-    author: { '@id': `${site.url}/#zee` },
+    author: { '@type': 'Person', name: 'Goddess Zee (Zipporah Banyay)', url: `${site.url}/about` },
     image: artwork,
+    inLanguage: 'en-US',
+    sameAs: podcast.listen.filter((l) => l.href && l.href !== '#').map((l) => l.href),
   },
 ];
 ---
-<Base title="Podcast" description={`${podcast.about} ${count} episodes and counting.`} schema={schema}>
+<Base title="Podcast" description={`${count} episodes with Goddess Zee on ancestral healing, the Divine Feminine and spiritual awakening. New episodes every other Friday.`} schema={schema}>
   <section class="wrap" style="padding-top: 80px; padding-bottom: 56px;">
     <div class="stack" style="gap: 18px; max-width: 760px;">
       <p class="eyebrow">The Holistic and Spiritual AF Podcast</p>

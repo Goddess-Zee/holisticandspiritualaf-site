@@ -1,6 +1,7 @@
 ---
 title: "4 Powerful Spiritual Gifts and How to Activate Them"
 subtitle: "Unleash Your Gifts"
+description: "Clairvoyance, clairsentience, clairaudience and claircognizance: how to recognize your spiritual gifts and practical ways to strengthen them."
 date: 2024-10-23
 theme: "Spiritual Practice"
 featured: true

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://holisticandspiritualaf.com/sitemap-index.xml

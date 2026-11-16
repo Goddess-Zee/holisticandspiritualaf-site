@@ -6,7 +6,7 @@ export const site = {
   shortName: 'Holistic & Spiritual AF',
   tagline: 'Healing and Wisdom From the Ancestors',
   description:
-    'Ancestral healing, energy work, and Divine Feminine embodiment for Afro-Indigenous, Afro-Caribbean and Afro-Latina women — podcast, classes, consultations, books and meditations with Goddess Zee.',
+    'Ancestral healing and Divine Feminine wisdom for Afro-Indigenous, Afro-Caribbean and Afro-Latina women: podcast, classes, consultations and books with Goddess Zee.',
   url: 'https://holisticandspiritualaf.com',
   founder: 'Zipporah Banyay',
   founderAlias: 'Goddess Zee',
@@ -322,12 +322,12 @@ export const about = {
 
 // Long-form YouTube videos featured on /videos (newest first). Swap ids to change the line-up.
 export const videos = [
-  { id: 'rovNcaGz4dQ', title: 'Subconscious Programming & How to Break the Cycle', length: '39 min', theme: 'Mindset' },
-  { id: 'R_evJ9FoN7I', title: "Why You Still Feel Your Ex's Energy: Energetic Cords Explained", length: '46 min', theme: 'Energy & relationships' },
-  { id: 'Xlz_-Y44JyE', title: 'The Mother Wound Didn’t Start With Her', length: '41 min', theme: 'Ancestral healing' },
-  { id: 'I_5MU0_NI5w', title: 'You Already Got the Sign… Now What?', length: '36 min', theme: 'Intuition' },
-  { id: 'QcK_3nEdC_I', title: 'Healing Changed My Dating Life. Here’s Why', length: '58 min', theme: 'Divine Feminine' },
-  { id: 'yc9gviUaTSk', title: 'Hoodoo as Resistance: Ancestral Power, Rootwork & Liberation', length: '50 min', theme: 'Rootwork' },
-  { id: 'cbYxv0FTpNc', title: "The Ancestors Built This City: Tampa's Untold Black History", length: '45 min', theme: 'History' },
+  { id: 'rovNcaGz4dQ', title: 'Subconscious Programming & How to Break the Cycle', length: '39 min', theme: 'Mindset', uploaded: '2026-11-08T17:00:09-08:00', seconds: 2359, description: 'How much of your life is actually yours, and how much comes from beliefs, fears and survival patterns you never consciously chose?' },
+  { id: 'R_evJ9FoN7I', title: "Why You Still Feel Your Ex's Energy: Energetic Cords Explained", length: '46 min', theme: 'Energy & relationships', uploaded: '2026-10-11T18:00:07-07:00', seconds: 2773, description: 'Ended a relationship and moved on, but still feel connected to that person? Goddess Zee explains energetic cords and how to release them.' },
+  { id: 'Xlz_-Y44JyE', title: 'The Mother Wound Didn’t Start With Her', length: '41 min', theme: 'Ancestral healing', uploaded: '2026-08-22T17:00:06-07:00', seconds: 2457, description: 'Healing the mother wound is not about blaming your mother, but understanding the women who came before her.' },
+  { id: 'I_5MU0_NI5w', title: 'You Already Got the Sign… Now What?', length: '36 min', theme: 'Intuition', uploaded: '2026-08-05T17:00:06-07:00', seconds: 2160, description: 'The dreams, the ringing in your ears, the repeating numbers: how many confirmations do you really need before you act on what Spirit is showing you?' },
+  { id: 'QcK_3nEdC_I', title: 'Healing Changed My Dating Life. Here’s Why', length: '58 min', theme: 'Divine Feminine', uploaded: '2026-06-23T17:00:06-07:00', seconds: 3504, description: 'What happens when you have healed enough to recognize what no longer aligns? How healing changes the way you date and love.' },
+  { id: 'yc9gviUaTSk', title: 'Hoodoo as Resistance: Ancestral Power, Rootwork & Liberation', length: '50 min', theme: 'Rootwork', uploaded: '2026-03-17T18:00:06-07:00', seconds: 3007, description: 'Goddess Zee and Mawiyah Kai EL-Jamah Bomani on hoodoo as resistance: ancestral power, rootwork and liberation.' },
+  { id: 'cbYxv0FTpNc', title: "The Ancestors Built This City: Tampa's Untold Black History", length: '45 min', theme: 'History', uploaded: '2026-06-21T17:00:06-07:00', seconds: 2698, description: "Some stories aren't lost; they're waiting to be remembered. A walk through Tampa's untold Black history." },
 ];
 export const youtubeChannel = 'https://www.youtube.com/@holisticandspiritualafpodcast';

@@ -11,7 +11,8 @@ const schema = paid.map((s) => ({
   '@type': 'Service',
   name: s.title,
   description: s.blurb,
-  provider: { '@id': `${site.url}/#zee` },
+  provider: { '@type': 'Person', name: 'Goddess Zee (Zipporah Banyay)', url: `${site.url}/about` },
+  serviceType: 'Spiritual consultation',
   areaServed: 'Online',
   offers: { '@type': 'Offer', price: s.price.replace(/[^0-9.]/g, ''), priceCurrency: 'USD', url: `${site.url}/consultations` },
 }));

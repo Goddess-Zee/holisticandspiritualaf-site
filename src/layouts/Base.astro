@@ -10,24 +10,38 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   schema?: Record<string, unknown>[];
   newsletter?: boolean;
+  /** 'article' for essays; adds article tags for social sharing */
+  type?: 'website' | 'article';
+  published?: Date;
+  /** Keep this page out of Google (thank-you and error pages) */
+  noindex?: boolean;
+  /** Breadcrumb trail between Home and this page, e.g. [{ name: 'Writings', href: '/writings' }] */
+  crumbs?: { name: string; href: string }[];
 }
-const { title, description = site.description, image = site.ogImage, schema = [], newsletter = true } = Astro.props;
-const pageTitle = title ? `${title} | ${site.name}` : `${site.name}: ${site.tagline}`;
+const {
+  title, description = site.description, image = site.ogImage, imageAlt = `${site.name}: ${site.tagline}`,
+  schema = [], newsletter = true, type = 'website', published, noindex = false, crumbs = [],
+} = Astro.props;
+// Brand suffix only when the whole title stays near Google's ~60-character display limit
+const pageTitle = !title ? `${site.name}: ${site.tagline}` : title.length <= 36 ? `${title} | ${site.name}` : title;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(image, site.url).href;
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1');
 const isHere = (href: string) => path === href || (href !== '/' && path.startsWith(href + '/'));
 
-const baseSchema = [
+const baseSchema: Record<string, unknown>[] = [
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': `${site.url}/#org`,
     name: site.name,
     url: site.url,
-    logo: `${site.url}/favicon.png`,
+    logo: { '@type': 'ImageObject', url: `${site.url}/favicon.png`, width: 512, height: 512 },
+    image: `${site.url}${site.ogImage}`,
+    description: site.description,
     founder: { '@id': `${site.url}/#zee` },
     sameAs: social.map((s) => s.href),
   },
@@ -37,11 +51,24 @@ const baseSchema = [
     '@id': `${site.url}/#zee`,
     name: site.founder,
     alternateName: site.founderAlias,
-    jobTitle: 'Energy healer, author and podcast host',
-    url: site.url,
+    jobTitle: 'Energy healer, medium, author and podcast host',
+    description: 'Reiki master, intuitive energy healer, medium and author with over 20 years of practice in ancestral healing and spiritual development.',
+    image: `${site.url}/images/home/goddess-zee-closeup.webp`,
+    url: `${site.url}/about`,
+    worksFor: { '@id': `${site.url}/#org` },
+    knowsAbout: ['Ancestral healing', 'Reiki', 'Energy healing', 'Mediumship', 'Shadow work', 'Divine Feminine', 'Tarot', 'Hoodoo and rootwork', 'Meditation'],
     sameAs: social.map((s) => s.href),
   },
 ];
+// Breadcrumbs on every page except the home page and hidden pages
+if (!['/', '/index', ''].includes(path) && !noindex) {
+  const trail = [{ name: 'Home', href: '/' }, ...crumbs, { name: title ?? site.name, href: path }];
+  baseSchema.push({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: trail.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.href, site.url).href })),
+  });
+}
 ---
 <!doctype html>
 <html lang="en">
@@ -51,18 +78,27 @@ const baseSchema = [
   <title>{pageTitle}</title>
   <meta name="description" content={description}>
   <link rel="canonical" href={canonical}>
+  {noindex && <meta name="robots" content="noindex, follow">}
   <meta name="theme-color" content="#120F0C">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="sitemap" href="/sitemap-index.xml">
 
-  <meta property="og:type" content="website">
+  <meta property="og:type" content={type}>
+  <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content={site.name}>
   <meta property="og:title" content={pageTitle}>
   <meta property="og:description" content={description}>
   <meta property="og:url" content={canonical}>
   <meta property="og:image" content={ogImage}>
+  <meta property="og:image:alt" content={imageAlt}>
+  {type === 'article' && published && <meta property="article:published_time" content={published.toISOString()}>}
+  {type === 'article' && <meta property="article:author" content={`${site.url}/about`}>}
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={pageTitle}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
+  <meta name="twitter:image:alt" content={imageAlt}>
 
   <meta name="google-site-verification" content={site.verification.google}>
   <meta name="facebook-domain-verification" content={site.verification.facebook}>

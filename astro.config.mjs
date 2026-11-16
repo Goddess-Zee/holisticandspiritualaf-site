@@ -5,5 +5,7 @@ export default defineConfig({
   site: 'https://holisticandspiritualaf.com',
   trailingSlash: 'never',
   build: { format: 'file' },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({ filter: (page) => !/\/(thanks|404)$/.test(page) }),
+  ],
 });
