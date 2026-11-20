@@ -10,3 +10,6 @@
 
 # Essay held back for the memoir
 /writings/my-ancestors-raised-me  /writings  302
+
+# Old GoDaddy sitemap -> new sitemap
+/sitemap.website.xml    /sitemap-index.xml  301
