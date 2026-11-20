@@ -30,7 +30,7 @@ By using our website or services, you agree to the terms of this policy.
 - Time spent on the site
 - Tracking cookies and usage analytics
 
-This helps us improve your experience, optimize performance, and tailor content.
+This helps us improve your experience, optimize performance, and tailor content. We use Google Analytics for this, and only after you choose “I’m In” on our cookie banner. Google Analytics shows us summary reports of how the site is used; we have turned off its advertising and personalization features. You can change your choice any time with the Cookie settings link at the bottom of every page.
 
 ## 3. How We Use Your Information
 

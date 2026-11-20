@@ -1,9 +1,10 @@
 ---
+import { site } from '../data/site';
 // "Conscious Cookies" consent banner.
-// Analytics (added later) load only after "I'm In". Every choice fires an `hsaf:consent` event,
+// Google Analytics loads only after "I'm In" (see src/lib/analytics.ts). Every choice fires an `hsaf:consent` event,
 // and `window.hsafConsent()` returns the saved choice.
 ---
-<div class="cookie-banner" id="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-text" hidden>
+<div class="cookie-banner" id="cookie-banner" data-ga={site.analytics.ga4} role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-text" hidden>
   <h2 id="cookie-title">Conscious Cookies</h2>
   <p id="cookie-text">We honor your digital boundaries. Cookies help us keep things running smoothly and learn what serves our community best. Nothing creepy, nothing sold — just clarity and care. <a href="/cookies">Cookie policy</a></p>
   <div class="cookie-actions">
@@ -15,6 +16,7 @@
 
 <script>
   import { remember, recall } from '../lib/store';
+  import { loadAnalytics, revokeAnalytics } from '../lib/analytics';
   const KEY = 'hsaf-cookie-consent';
   const banner = document.getElementById('cookie-banner')!;
   const read = () => recall(KEY);
@@ -22,6 +24,8 @@
   const w = window as any;
 
   w.hsafConsent = read;
+  const ga = banner.dataset.ga ?? '';
+  if (read() === 'yes') loadAnalytics(ga);
   if (!read()) banner.hidden = false;
 
   banner.querySelectorAll<HTMLButtonElement>('[data-consent]').forEach((b) => {
@@ -29,6 +33,7 @@
       const v = b.dataset.consent ?? 'no';
       save(v);
       banner.hidden = true;
+      if (v === 'yes') loadAnalytics(ga); else revokeAnalytics();
       document.dispatchEvent(new CustomEvent('hsaf:consent', { detail: v }));
     });
   });

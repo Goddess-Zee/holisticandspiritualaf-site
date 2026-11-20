@@ -10,4 +10,10 @@ import Base from '../layouts/Base.astro';
       <div class="btns" style="justify-content: center;"><a class="btn btn-gold" href="/podcast">Listen to the podcast</a><a class="btn btn-line" href="/">Back home</a></div>
     </div>
   </section>
+  <script>
+    import { track } from '../lib/analytics';
+    // Contact and podcast-guest forms land here after sending
+    const from = document.referrer ? new URL(document.referrer).pathname : '';
+    track('generate_lead', { form: from.includes('be-a-guest') ? 'Podcast guest application' : 'Contact form' });
+  </script>
 </Base>

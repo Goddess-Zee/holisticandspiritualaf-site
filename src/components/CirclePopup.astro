@@ -38,6 +38,7 @@
 
 <script>
   import { remember, recall, rememberForVisit, recallForVisit } from '../lib/store';
+  import { track } from '../lib/analytics';
   const dlg = document.getElementById('circle-pop') as HTMLDialogElement;
   const form = dlg.querySelector('form') as HTMLFormElement;
   const err = dlg.querySelector('.circle-error') as HTMLElement;
@@ -49,7 +50,7 @@
   const seenThisVisit = () => recallForVisit(SEEN);
   const markSeen = () => rememberForVisit(SEEN, '1');
 
-  const open = () => { if (!dlg.open) { dlg.showModal(); markSeen(); } };
+  const open = () => { if (!dlg.open) { dlg.showModal(); markSeen(); track('view_promotion', { promotion_name: 'Join the Circle 10%' }); } };
   const close = () => dlg.close();
 
   // Any "Claim 10% Off" button opens it straight away
@@ -101,6 +102,7 @@
       const data = await res.json();
       if (!data.success) { console.warn('[circle] MailerLite said:', data.message ?? data.errors); throw new Error('rejected'); }
       set(JOINED, '1');
+      track('sign_up', { method: 'Join the Circle pop-up' });
       showDone();
     } catch {
       err.innerHTML = 'Something went wrong. Please try again, or <a href="/contact?topic=newsletter">send us a message</a> and we’ll add you.';

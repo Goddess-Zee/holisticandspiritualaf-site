@@ -11,6 +11,8 @@ export const site = {
   founder: 'Zipporah Banyay',
   founderAlias: 'Goddess Zee',
   ogImage: '/og-image.jpg',
+  // Google Analytics 4 measurement ID (loads only after cookie consent)
+  analytics: { ga4: 'G-CQ0GFS4Q0S' },
   verification: {
     google: 'qAj3K12_AwtSqnEn92dNIdW4ZGlSmbZyKfvECCwZcOk',
     facebook: '0n8o2b1u326bmx25b7bxgent9zahiy',
